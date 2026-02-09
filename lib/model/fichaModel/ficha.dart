@@ -8,7 +8,7 @@ class Modificador {
     required this.valor,
     required this.porGraduacao,
   });
-
+//teste
   Map<String,dynamic> toJson(){
     return{
       'nome':nome,
