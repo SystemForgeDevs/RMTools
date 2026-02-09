@@ -257,7 +257,7 @@ class Ficha{
 
 
 
-  //CONSRUTOR DA FICHA NORMAL
+  //CONSTRUTOR DA FICHA NORMAL
    Ficha._(
     this.np,
     this.nomeJogador,
@@ -323,7 +323,7 @@ class Ficha{
         
     } 
 
-
+  
 
 //PERICIAS
   Pericia? verificarPericia(String nome){
@@ -476,7 +476,7 @@ class Ficha{
   }
 
 
-  //PODERES
+//PODERES
   bool adicionarPoderes(String nome){
     bool existe = poderes.any((p) => p.nomePoder == nome);
     if(!existe ){
@@ -489,12 +489,9 @@ class Ficha{
   
   //COMPONENTES
   bool adicionarComponentes(String nomePoder,String nomeComponente,String efeito,int custoBase,int graduacao){
-    nomePoder
     
-    if(!existe ){
-      
-      return true;
-    }
+    
+   
   
     return false;
 
