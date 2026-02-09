@@ -487,7 +487,7 @@ class Ficha{
     return false;
   }
   
-  List acharPoderes(){
+  List<Poder> acharPoderes(){
     return poderes;
   } 
  
