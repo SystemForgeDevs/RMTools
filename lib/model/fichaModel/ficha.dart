@@ -488,12 +488,11 @@ class Ficha{
   }
   
   //COMPONENTES
-<<<<<<< HEAD
   bool adicionarComponentes(String nomePoder,String nomeComponente,String efeito,int custoBase,int graduacao){
-    
+    return false;
+  }
     
    
-=======
   // bool adicionarComponentes(String nomePoder,String nomeComponente,String efeito,int custoBase,int graduacao){
   //   nomePoder;
     
@@ -501,7 +500,6 @@ class Ficha{
       
   //     return true;
   //   }
->>>>>>> d06f4d61101d4a5d0b57bfdbb853dc8804acf0f3
   
   //   return false;
 
