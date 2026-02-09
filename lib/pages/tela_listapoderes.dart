@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:rmtools/pages/tela_fichabasica.dart';
 import 'package:rmtools/pages/tela_personagem_editar.dart';
 import 'package:rmtools/pages/tela_principal.dart';
 import 'package:rmtools/model/fichaModel/armazenamento_ficha.dart';
+import 'package:rmtools/pages/tela_poderes.dart';
 
 
 class TelaListaPoderes extends StatefulWidget { 
@@ -15,7 +15,7 @@ class TelaListaPoderes extends StatefulWidget {
 
 
 class _TelaListaPoderesState extends State<TelaListaPoderes> {
-  List<String> fichas = [];
+  List<String> poderes = [];
   int? selecionado;
   String? nomeSelecionado;
   
@@ -23,7 +23,7 @@ class _TelaListaPoderesState extends State<TelaListaPoderes> {
     final retorno = await FichaRepository().listarFichas();
 
     setState(() {
-      fichas = retorno;
+      poderes = retorno;
     });
   }
 
@@ -85,7 +85,7 @@ class _TelaListaPoderesState extends State<TelaListaPoderes> {
                       Expanded(
                         child: ListView.builder(
                           padding: EdgeInsets.zero,
-                          itemCount: fichas.length,
+                          itemCount: poderes.length,
                           itemBuilder: (context, index) {
                             final ativo = selecionado == index;
 
@@ -108,7 +108,7 @@ class _TelaListaPoderesState extends State<TelaListaPoderes> {
                                   borderRadius: BorderRadius.circular(12),
                                 ),
                                 child: Text(
-                                  fichas[index],
+                                  poderes[index],
                                   style: const TextStyle(
                                     fontSize: 40,
                                     color: Colors.white,
@@ -179,14 +179,14 @@ class _TelaListaPoderesState extends State<TelaListaPoderes> {
                                             TextButton(
                                               onPressed: () async {
                                                 final repo = FichaRepository();
-                                                await repo.excluir(fichas[selecionado!]);
+                                                await repo.excluir(poderes[selecionado!]);
 
                                                 if(!mounted){
                                                   return;
                                                 }
 
                                                 setState(() {
-                                                  fichas.removeAt(selecionado!); 
+                                                  poderes.removeAt(selecionado!); 
                                                   selecionado = null;
                                                 });
 
@@ -222,7 +222,7 @@ class _TelaListaPoderesState extends State<TelaListaPoderes> {
                                     Navigator.push(
                                       context,
                                       MaterialPageRoute(
-                                        builder: (context) => TelaPersonagemEditar(nomePersonagem: fichas[selecionado!])
+                                        builder: (context) => TelaPersonagemEditar(nomePersonagem: poderes[selecionado!])
                                       )
                                     );
                                   }
@@ -251,7 +251,7 @@ class _TelaListaPoderesState extends State<TelaListaPoderes> {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => TelaFichabasica()
+                      builder: (context) => TelaPoderes(nomePersonagem: widget.nomePersonagem)
                     )
                   );
                 },

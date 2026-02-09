@@ -8,9 +8,8 @@ import 'package:rmtools/pages/tela_principal.dart';
 //fontSize(titulos): 50
 //espaçamento: 40
 
-
-class MyApp extends StatelessWidget{
-  const MyApp({super.key});
+class RMtools extends StatelessWidget{
+  const RMtools({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -22,6 +21,6 @@ class MyApp extends StatelessWidget{
 }
 void main() {
   runApp(
-    const MyApp()
+    const RMtools()
   );
 }
