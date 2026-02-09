@@ -484,9 +484,16 @@ class Ficha{
     return false;
   }
   
-  List<Poder> acharPoderes(){
-    return poderes;
-  } 
+  List<String> acharPoderes() {
+    List<String> lista = [];
+
+    for (final Poder poder in poderes) {
+      lista.add(poder.nomePoder);
+    }
+
+    return lista;
+}
+
  
 
   //COMPONENTES
