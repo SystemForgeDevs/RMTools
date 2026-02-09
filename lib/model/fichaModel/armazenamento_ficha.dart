@@ -43,6 +43,18 @@ class FichaRepository {
     await file.writeAsString(jsonString);
   }
 
+  Future<bool> salvarPoder(String nomePersonagem, String nomePoder) async {
+  final ficha = await carregar(nomePersonagem);
+  if (ficha == null) return false;
+
+  final ok = ficha.adicionarPoderes(nomePoder);
+  if (!ok) return false;
+
+  await salvar(ficha);
+  return true;
+}
+
+
   Future<Ficha?> carregar(String nomePersonagem) async {
     final file = await _file(nomePersonagem);
     if (!await file.exists()) return null;
@@ -118,5 +130,12 @@ Future<List<String>> carregarNomesPoderes(String nomePersonagem) async {
   return ficha.poderes.map((p) => p.nomePoder).toList();
 }
 
+Future<List<String>> carregarNomesComponentes(String nomePersonagem) async {
+  final ficha = await carregar(nomePersonagem);
+  if (ficha == null) return [];
+  return ficha.poderes.map((p) => p.nomePoder).toList();
 }
+
+
+} 
 
