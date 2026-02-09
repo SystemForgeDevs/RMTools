@@ -110,4 +110,13 @@ class FichaRepository {
       await file.delete(); 
     }
   }
+
+
+Future<List<String>> carregarNomesPoderes(String nomePersonagem) async {
+  final ficha = await carregar(nomePersonagem);
+  if (ficha == null) return [];
+  return ficha.poderes.map((p) => p.nomePoder).toList();
 }
+
+}
+
