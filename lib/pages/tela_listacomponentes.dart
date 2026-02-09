@@ -1,19 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:rmtools/pages/tela_personagem_editar.dart';
 import 'package:rmtools/model/fichaModel/armazenamento_ficha.dart';
-import 'package:rmtools/pages/tela_poderes.dart';
+import 'package:rmtools/pages/tela_componentes.dart';
 
-
-class TelaListaPoderes extends StatefulWidget { 
+class TelaListaComponentes extends StatefulWidget { 
   final String nomePersonagem;
-  const TelaListaPoderes({super.key, required this.nomePersonagem}); 
+  const TelaListaComponentes({super.key, required this.nomePersonagem}); 
   
   @override
-  State<TelaListaPoderes> createState() => _TelaListaPoderesState();
+  State<TelaListaComponentes> createState() => _TelaListaComponentesState();
 }
 
-
-class _TelaListaPoderesState extends State<TelaListaPoderes> {
+class _TelaListaComponentesState extends State<TelaListaComponentes> {
   List<String> poderes = [];
   int? selecionado;
   String? nomeSelecionado;
@@ -51,7 +49,7 @@ class _TelaListaPoderesState extends State<TelaListaPoderes> {
               
               //***Título***
               Text(
-                "Poderes",
+                "Componentes",
                 style: TextStyle(
                   color: Colors.white,
                   fontSize: 50,
@@ -260,7 +258,7 @@ class _TelaListaPoderesState extends State<TelaListaPoderes> {
                   );
                 },
                 child: const Text(
-                  "Adicionar Poderes",
+                  "Adicionar Componentes",
                   style: TextStyle(fontSize: 25),
                 ),
               ),

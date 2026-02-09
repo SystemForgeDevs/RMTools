@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:rmtools/pages/tela_habilidades.dart';
 import 'package:rmtools/pages/tela_listafichas.dart';
 import 'package:rmtools/pages/tela_pericias.dart';
-import 'package:rmtools/pages/tela_listapoderes.dart';
+import 'package:rmtools/pages/tela_poderesmenu.dart';
 import 'package:rmtools/pages/tela_vantagens.dart';
 
 
@@ -182,7 +182,7 @@ class _TelaPersonagemEditarState extends State<TelaPersonagemEditar> {
                         Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (context) => TelaListaPoderes(nomePersonagem: widget.nomePersonagem),
+                              builder: (context) => TelaPoderesMenu(nomePersonagem: widget.nomePersonagem),
                           ),
                         );
                       },

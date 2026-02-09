@@ -14,6 +14,7 @@ class _TelaFichabasicaState extends State<TelaFichabasica> {
   final nomeJogador = TextEditingController();
   final nomePersonagem = TextEditingController();
   late Ficha fichaPersonagem; //<------ se der erro ver dps
+  
   int valorNP = 1;
   bool erro = false;
   bool sucesso = false;

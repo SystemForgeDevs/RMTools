@@ -47,6 +47,7 @@ class _TelaHabilidades extends State<TelaHabilidades>{
       });
     }
   }
+  
   //***Método de alterar as habilidades e pontos***
   Future<void> alterar(String chave, int valor, Function(int,int) atualizar) async {
     final repo = FichaRepository();
@@ -260,7 +261,6 @@ class _TelaHabilidades extends State<TelaHabilidades>{
 
           //***Espaçamento***
           Spacer(),
-
 
           //***Botao Voltar***
           Padding(
