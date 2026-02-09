@@ -24,9 +24,6 @@ class Modificador {
       porGraduacao: json['porGraduacao']
     );
   }
-
-
-
 }
 
 class Componente{
