@@ -5,15 +5,16 @@ import 'package:rmtools/pages/tela_principal.dart';
 import 'package:rmtools/model/fichaModel/armazenamento_ficha.dart';
 
 
-class TelaListaFicha extends StatefulWidget { 
-  const TelaListaFicha({super.key}); 
+class TelaListaPoderes extends StatefulWidget { 
+  final String nomePersonagem;
+  const TelaListaPoderes({super.key, required this.nomePersonagem}); 
   
   @override
-  State<TelaListaFicha> createState() => _TelaFichaState();
+  State<TelaListaPoderes> createState() => _TelaListaPoderesState();
 }
 
 
-class _TelaFichaState extends State<TelaListaFicha> {
+class _TelaListaPoderesState extends State<TelaListaPoderes> {
   List<String> fichas = [];
   int? selecionado;
   String? nomeSelecionado;
@@ -46,7 +47,7 @@ class _TelaFichaState extends State<TelaListaFicha> {
               
               //***Título***
               Text(
-                "Fichas",
+                "Poderes",
                 style: TextStyle(
                   color: Colors.white,
                   fontSize: 50,
@@ -255,7 +256,7 @@ class _TelaFichaState extends State<TelaListaFicha> {
                   );
                 },
                 child: const Text(
-                  "Adicionar Ficha",
+                  "Adicionar Poderes",
                   style: TextStyle(fontSize: 25),
                 ),
               ),

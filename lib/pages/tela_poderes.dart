@@ -221,7 +221,6 @@ class _TelaPoderesState extends State<TelaPoderes>{
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-
                     // Botão de ajuda
                     IconButton(
                       icon: const Icon(Icons.help, color: Colors.white),
