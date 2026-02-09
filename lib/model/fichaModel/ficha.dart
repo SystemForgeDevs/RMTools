@@ -488,17 +488,17 @@ class Ficha{
   }
   
   //COMPONENTES
-  bool adicionarComponentes(String nomePoder,String nomeComponente,String efeito,int custoBase,int graduacao){
-    nomePoder
+  // bool adicionarComponentes(String nomePoder,String nomeComponente,String efeito,int custoBase,int graduacao){
+  //   nomePoder;
     
-    if(!existe ){
+  //   if(!existe){
       
-      return true;
-    }
+  //     return true;
+  //   }
   
-    return false;
+  //   return false;
 
-  }  
+  // }  
   
   
   
