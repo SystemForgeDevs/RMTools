@@ -487,6 +487,11 @@ class Ficha{
     return false;
   }
   
+  List acharPoderes(){
+    return poderes;
+  } 
+ 
+
   //COMPONENTES
   bool adicionarComponentes(String nomePoder,String nomeComponente,String efeito,int custoBase,int graduacao){
     return false;
