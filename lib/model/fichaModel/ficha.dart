@@ -232,24 +232,23 @@ class Ficha{
   List<Poder> poderes = [];
   
   Map<String, String> habilidadePorPericia = {
-  "Acrobacia": "agilidade",
-  "Atletismo": "forca",
-  "Combate Dis.": "destreza",
-  "Combate CaC.": "luta",
-  "Enganação": "presenca",
-  "Especialidade":"presenca",
-  "Furtividade": "agilidade",
-  "Intimidação": "presenca",
-  "Intuição":"prontidao",
-  "Investigação": "intelecto",
-  "Percepção": "prontidao",
-  "Persuasão": "presenca",
-  "PrestiDig.":"destreza",
-  "Tecnologia": "intelecto",
-  "Tratamento": "intelecto",
-  "Veículos": "destreza",
-
-};
+    "Acrobacia": "agilidade",
+    "Atletismo": "forca",
+    "Combate Dis.": "destreza",
+    "Combate CaC.": "luta",
+    "Enganação": "presenca",
+    "Especialidade":"presenca",
+    "Furtividade": "agilidade",
+    "Intimidação": "presenca",
+    "Intuição":"prontidao",
+    "Investigação": "intelecto",
+    "Percepção": "prontidao",
+    "Persuasão": "presenca",
+    "PrestiDig.":"destreza",
+    "Tecnologia": "intelecto",
+    "Tratamento": "intelecto",
+    "Veículos": "destreza",
+  };
 
 
 

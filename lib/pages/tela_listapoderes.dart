@@ -18,19 +18,23 @@ class _TelaListaPoderesState extends State<TelaListaPoderes> {
   int? selecionado;
   String? nomeSelecionado;
   
-  Future<void> carregarFichas() async {
+  Future<void> carregarPoderes() async {
     final ficha = FichaRepository();
-    final retorno = ficha.carregarNomesPoderes(widget.nomePersonagem);
+    final retorno = await ficha.carregarNomesPoderes(widget.nomePersonagem);
 
-    setState(() async {
-      poderes = await retorno;
+    if(!mounted){
+      return;
+    }
+
+    setState((){
+      poderes = retorno;
     });
   }
 
   @override
   void initState(){
     super.initState();
-    carregarFichas();
+    carregarPoderes();
   }
 
   @override
