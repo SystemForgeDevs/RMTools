@@ -84,104 +84,62 @@ class _TelaPoderesState extends State<TelaPoderes>{
   late String escolha;
 
   final List<String> descritoresBasicos = [
-  // Físicos / Naturais
-  "Físico",
+  //ORIGEM
+  "Nenhum Descritor",
+  "Alienígena",
   "Biológico",
-  "Orgânico",
-  "Anatômico",
-  "Cinético",
-  "Impacto",
-  "Cortante",
-  "Perfurante",
-  "Munição",
-  "Pressão",
-  "Vibração",
-  "Sônico",
-
-  // Energéticos
-  "Energia",
-  "Elétrico",
-  "Térmico",
-  "Calor",
-  "Frio",
-  "Fogo",
-  "Radiacao",
-  "Luz",
-  "Laser",
-  "Plasma",
-  "Micro Ondas",
-
-  // Elementais
-  "Ar",
-  "Agua",
-  "Gelo",
-  "Terra",
-  "Areia",
-  "Lama",
-  "Metal",
-  "Madeira",
-  "Cristal",
-
-  // Científicos / Tecnológicos
-  "Tecnológico",
-  "Nanotecnologia",
-  "Mecânico",
-  "Robótico",
-  "Cibernético",
-  "Químico",
-  "Farmacológico",
-  "Experimental",
-  "Engenharia Genetica",
-  "Inteligência Artificial",
-
-  // Mentais / Psíquicos
-  "Mental",
-  "Psíquico",
-  "Telepático",
-  "Emocional",
-  "Ilusão Mental",
-  "Controle Mental",
-  "Medo",
-  "Dor",
-
-  // Espirituais / Sobrenaturais
-  "Sobrenatural",
-  "Espiritual",
-  "Místico",
+  "Chi",
   "Divino",
-  "Demoníaco",
-  "Infernal",
-  "Celestial",
-  "Maldição",
-
-  // Ambientais / Condição
-  "Ambiental",
-  "Vazio",
-  "Gravidade",
-  "Magnático",
-  "Radiação Cósmica",
-  "Pressão Extrema",
-  "Profundidade",
-  "Espaço",
-  "Subaquático",
-
-  // Estados / Dano Especial
-  "Veneno",
-  "Doença",
-  "Ácido",
-  "Corrosão",
-  "Envelhecimento",
-  "Degeneração",
-  "Paralisia",
-  "Asfixia",
-
-  // Meta / Conceituais
+  "Mágico",
+  "Místico",
   "Mutante",
-  "Aprimoramento",
-  "Artificial",
-  "Natural",
-  "Não Letal",
-  "Letal"
+  "Preternatural",
+  "Primordial",
+  "Psiónico",
+  "Psíquico",
+  "Habilidade",
+  "Tecnológico",
+  "Treinamento",
+
+  //ENERGIA
+  "Ácido",
+  "Químico",
+  "Frio",
+  "Cósmico",
+  "Escuridão",
+  "Eletricidade",
+  "Gravidade",
+  "Calor",
+  "Cinético",
+  "Luz",
+  "Magnético",
+  "Radiação",
+  "Sônico",
+  "Vibração",
+
+  //FENÔMENOS
+  "Cores",
+  "Dimensões",
+  "Sonhos",
+  "Entropia",
+  "Ideias",
+  "Sorte",
+  "Loucura",
+  "Memes",
+  "Mente",
+  "Forças Quânticas",
+  "Espaço",
+  "Pensamento",
+  "Tempo",
+
+  //TIPO
+  "Combustão",
+  "Congelamento",
+  "Corte",
+  "Impacto",
+  "Penetração",
+  "Pressão",
+  "Efeito de Área",
   ];
   late String escolhaDescritores;
 
@@ -221,6 +179,7 @@ class _TelaPoderesState extends State<TelaPoderes>{
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
+
                     // Botão de ajuda
                     IconButton(
                       icon: const Icon(Icons.help, color: Colors.white),
