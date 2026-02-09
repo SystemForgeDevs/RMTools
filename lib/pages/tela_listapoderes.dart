@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:rmtools/pages/tela_personagem_editar.dart';
-import 'package:rmtools/pages/tela_principal.dart';
 import 'package:rmtools/model/fichaModel/armazenamento_ficha.dart';
 import 'package:rmtools/pages/tela_poderes.dart';
 
@@ -20,10 +19,11 @@ class _TelaListaPoderesState extends State<TelaListaPoderes> {
   String? nomeSelecionado;
   
   Future<void> carregarFichas() async {
-    final retorno = await FichaRepository().listarFichas();
+    final ficha = FichaRepository();
+    final retorno = ficha.carregarNomesPoderes(widget.nomePersonagem);
 
-    setState(() {
-      poderes = retorno;
+    setState(() async {
+      poderes = await retorno;
     });
   }
 
@@ -272,12 +272,7 @@ class _TelaListaPoderesState extends State<TelaListaPoderes> {
                   minimumSize: const Size(100, 50),
                 ),
                 onPressed: () {
-                  Navigator.pop(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => const TelaPrincipal(),
-                    ),
-                  );
+                  Navigator.pop(context);
                 },
                 child: const Text(
                   "Voltar",
