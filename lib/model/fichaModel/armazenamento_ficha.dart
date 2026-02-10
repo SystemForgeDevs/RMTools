@@ -130,10 +130,16 @@ Future<List<String>> carregarNomesPoderes(String nomePersonagem) async {
   return ficha.poderes.map((p) => p.nomePoder).toList();
 }
 
-Future<List<String>> carregarNomesComponentes(String nomePersonagem) async {
+Future<List<String>> carregarNomesComponentes(String nomePersonagem,String nomePoder) async {
   final ficha = await carregar(nomePersonagem);
   if (ficha == null) return [];
-  return ficha.poderes.map((p) => p.nomePoder).toList();
+
+  final poder = ficha.poderes.firstWhere(
+    (p) => p.nomePoder == nomePoder
+  );
+
+
+  return poder.componentes.map((c) => c.nomeComponente).toList();
 }
 
 
