@@ -496,9 +496,46 @@ class Ficha{
  
 
   //COMPONENTES
-  bool adicionarComponentes(String nomePoder,String nomeComponente,String efeito,int custoBase,int graduacao){
-    return false;
+  bool adicionarComponente(
+  String nomePoder,
+  String nomeComponente,
+  String efeito,
+  int custoBase,
+  int graduacao,
+) {
+  Poder? poder;
+
+  for (final p in poderes) {
+    if (p.nomePoder == nomePoder) {
+      poder = p;
+      break;
+    }
   }
+
+  if (poder == null) return false;
+
+  final jaExiste = poder.componentes.any(
+    (c) => c.nomeComponente == nomeComponente,
+  );
+  if (jaExiste) return false;
+
+  if (graduacao <= 0 || custoBase <= 0) return false;
+
+  final componente = Componente(
+    nomeComponente: nomeComponente,
+    efeito: efeito,
+    custoBase: custoBase,
+    graduacao: graduacao,
+  );
+
+  int custoTotal = custoBase * graduacao;
+  if(pontosD<custoTotal) return false;
+
+  poder.componentes.add(componente);
+  return true;
+}
+
+
     
    
   // bool adicionarComponentes(String nomePoder,String nomeComponente,String efeito,int custoBase,int graduacao){
