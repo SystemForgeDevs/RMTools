@@ -142,6 +142,5 @@ Future<List<String>> carregarNomesComponentes(String nomePersonagem,String nomeP
   return poder.componentes.map((c) => c.nomeComponente).toList();
 }
 
-
 } 
 

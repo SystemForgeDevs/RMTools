@@ -227,6 +227,13 @@ class Ficha{
     'presenca': 0,
     'vigor': 0,
   };
+  
+  int get esquiva => habilidades['agilidade'] ?? 0;
+  int get fortitude => habilidades['vigor'] ?? 0;
+  int get resistencia => habilidades['vigor'] ?? 0;
+  int get aparar => habilidades['luta'] ?? 0;
+  int get vontade => habilidades['prontidao'] ?? 0;
+  
   List<Vantagem> vantagens = [];
   List<Pericia> pericias = [];
   List<Poder> poderes = [];
@@ -496,44 +503,7 @@ class Ficha{
  
 
   //COMPONENTES
-  bool adicionarComponente(
-  String nomePoder,
-  String nomeComponente,
-  String efeito,
-  int custoBase,
-  int graduacao,
-) {
-  Poder? poder;
-
-  for (final p in poderes) {
-    if (p.nomePoder == nomePoder) {
-      poder = p;
-      break;
-    }
-  }
-
-  if (poder == null) return false;
-
-  final jaExiste = poder.componentes.any(
-    (c) => c.nomeComponente == nomeComponente,
-  );
-  if (jaExiste) return false;
-
-  if (graduacao <= 0 || custoBase <= 0) return false;
-
-  final componente = Componente(
-    nomeComponente: nomeComponente,
-    efeito: efeito,
-    custoBase: custoBase,
-    graduacao: graduacao,
-  );
-
-  int custoTotal = custoBase * graduacao;
-  if(pontosD<custoTotal) return false;
-
-  poder.componentes.add(componente);
-  return true;
-}
+  
 
 
     
