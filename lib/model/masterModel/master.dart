@@ -1,4 +1,4 @@
-
+class Rolagens{
 //test para saber se a ação é efetuada
 bool testeSimples(int dado, int modificador,int bonus,int cd){
 
@@ -6,8 +6,9 @@ bool testeSimples(int dado, int modificador,int bonus,int cd){
     return true;
   }
   return false;
-}
+  }
 
-int testeGraduado(){
+int testeGraduado(int cd,int dado,){
   return 0;
+  }
 }
