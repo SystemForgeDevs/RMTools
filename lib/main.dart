@@ -15,7 +15,7 @@ class RMtools extends StatelessWidget{
   Widget build(BuildContext context) {
     return const MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: TelaPrincipal()
+      home: TelaPrincipal() 
     );
   }
 }
