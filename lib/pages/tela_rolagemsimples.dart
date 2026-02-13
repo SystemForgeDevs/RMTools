@@ -1,23 +1,24 @@
 import 'package:flutter/material.dart';
-import 'package:rmtools/model/fichaModel/ficha.dart';
-import 'package:rmtools/pages/tela_listafichas.dart';
-import 'package:rmtools/model/fichaModel/armazenamento_ficha.dart';
+import 'package:flutter/services.dart';
+import 'package:rmtools/model/masterModel/master.dart';
+import 'package:rmtools/pages/tela_mestragremmenu.dart';
 
-class TelaFichabasica extends StatefulWidget {
-  const TelaFichabasica({super.key});
+class TelaRolagemSimples extends StatefulWidget {
+  const TelaRolagemSimples({super.key});
 
   @override
-  State<TelaFichabasica> createState() => _TelaFichabasicaState();
+  State<TelaRolagemSimples> createState() => _TelaRolagemSimplesState();
 }
 
-class _TelaFichabasicaState extends State<TelaFichabasica> {
-  final nomeJogador = TextEditingController();
-  final nomePersonagem = TextEditingController();
-  late Ficha fichaPersonagem; //<------ se der erro ver dps
+class _TelaRolagemSimplesState extends State<TelaRolagemSimples> {
+  final valorDado = TextEditingController();
+  final valorBonus = TextEditingController();
+  final valorModificador = TextEditingController();
+  int valorCD = 1;
   
-  int valorNP = 1;
   bool erro = false;
   bool sucesso = false;
+  bool preencha = false;
 
   @override
   Widget build(BuildContext context) {
@@ -38,7 +39,7 @@ class _TelaFichabasicaState extends State<TelaFichabasica> {
                 //***Titulo***
                 children: [
                   const Text(
-                    "Informações Básicas",
+                    "Rolagem Simples",
                     style: TextStyle(
                       fontSize: 35,
                       color: Colors.white,
@@ -50,15 +51,19 @@ class _TelaFichabasicaState extends State<TelaFichabasica> {
                   const SizedBox(height: 40),
                   
                   
-                  //***Campo Nome jogador***
+                  //***Campo Dado***
                   SizedBox(
                     width: 300,
                     height: 100,
                     child: TextField(
-                      controller: nomeJogador,
+                      controller: valorDado,
+                      keyboardType: TextInputType.number,
+                      inputFormatters: [
+                        FilteringTextInputFormatter.allow(RegExp(r'^-?\d*'))
+                      ],
                       style: const TextStyle(color: Colors.white),
                       decoration: const InputDecoration(
-                        labelText: "Nome do Jogador",
+                        labelText: "Valor do Dado",
                         border: OutlineInputBorder(),
                         contentPadding:
                             EdgeInsets.symmetric(vertical: 20, horizontal: 10),
@@ -67,15 +72,19 @@ class _TelaFichabasicaState extends State<TelaFichabasica> {
                   ),
 
 
-                  //***Campo Nome do personagem***
+                  //***Campo Bonus***
                   SizedBox(
                     width: 300,
                     height: 100,
                     child: TextField(
-                      controller: nomePersonagem,
+                      controller: valorBonus,
+                      keyboardType: TextInputType.number,
+                      inputFormatters: [
+                        FilteringTextInputFormatter.allow(RegExp(r'^-?\d*'))
+                      ],
                       style: const TextStyle(color: Colors.white),
                       decoration: const InputDecoration(
-                        labelText: "Nome do Personagem",
+                        labelText: "Valor do Bônus",
                         border: OutlineInputBorder(),
                         contentPadding:
                             EdgeInsets.symmetric(vertical: 20, horizontal: 10),
@@ -83,9 +92,28 @@ class _TelaFichabasicaState extends State<TelaFichabasica> {
                     ),
                   ),
 
+                  //***Campo Modificador***
+                  SizedBox(
+                    width: 300,
+                    height: 100,
+                    child: TextField(
+                      controller: valorModificador,
+                      keyboardType: TextInputType.number,
+                      inputFormatters: [
+                        FilteringTextInputFormatter.allow(RegExp(r'^-?\d*'))
+                      ],
+                      style: const TextStyle(color: Colors.white),
+                      decoration: const InputDecoration(
+                        labelText: "Valor do Modificador",
+                        border: OutlineInputBorder(),
+                        contentPadding:
+                            EdgeInsets.symmetric(vertical: 20, horizontal: 10),
+                      ),
+                    ),
+                  ),
 
                   Text(
-                    "NP: Nível de Poder",
+                    "Valor CD",
                     style: TextStyle(
                       fontSize: 20,
                       fontWeight: FontWeight.w500,
@@ -96,14 +124,14 @@ class _TelaFichabasicaState extends State<TelaFichabasica> {
 
                   //***Slider***
                   Slider(
-                    value: valorNP.toDouble(),
+                    value: valorCD.toDouble(),
                     min: 1,
                     max: 50,
                     divisions: 49,
-                    label: valorNP.toString(),
+                    label: valorCD.toString(),
                     onChanged: (double novoValor) {
                       setState(() {
-                        valorNP = novoValor.toInt();
+                        valorCD = novoValor.toInt();
                       });
                     },
                   ),
@@ -117,18 +145,17 @@ class _TelaFichabasicaState extends State<TelaFichabasica> {
                   Padding(
                     padding: const EdgeInsets.only(bottom: 30),
 
-                    //***Botao Cria ficha***
+                    //***Botao Rolagem***
                     child: ElevatedButton(
                       style: ElevatedButton.styleFrom(
                         minimumSize: const Size(300, 100),
                       ),
                       onPressed: () async{
-                        final navigator = Navigator.of(context);
-
-                        if (nomeJogador.text.isEmpty || nomePersonagem.text.isEmpty){
+                        if (valorDado.text.isEmpty || valorBonus.text.isEmpty || valorModificador.text.isEmpty){
                           setState(() {
-                            erro = true;
+                            erro = false;
                             sucesso = false;
+                            preencha = true;
                           });
                           return;
                         }
@@ -137,33 +164,31 @@ class _TelaFichabasicaState extends State<TelaFichabasica> {
                           erro = false;
                           sucesso = false;
 
-                          //Instancia a ficha
-                          fichaPersonagem = Ficha.criar(
-                            np: valorNP,
-                            nomeJogador: nomeJogador.text,
-                            nomePersonagem: nomePersonagem.text,
-                          );
-                          
-                          //Salva a ficha
-                          FichaRepository().salvar(fichaPersonagem);
-                          
-                          sucesso = true;
-                        });
+                          //faz o teste
+                          final rolagem = Rolagens();
+                          final dado = int.parse(valorDado.text);
+                          final bonus = int.parse(valorBonus.text);
+                          final modificador = int.parse(valorModificador.text);
+                          final cd = valorCD;
 
-                        await Future.delayed(const Duration(seconds: 1));
+                          if(rolagem.testeSimples(dado, modificador, bonus, cd)){
+                            sucesso = true;
+                            erro = false;
+                            preencha = false;
+                          }else{
+                            sucesso = false;
+                            erro = true;
+                            preencha = false;
+                          }
+                          
+                        });
 
                         if(!mounted){
                           return;
-                        }
-
-                        navigator.push(
-                            MaterialPageRoute(
-                              builder: (context) => const TelaListaFicha(),
-                            )
-                        );   
+                        }   
                       },
                       child: const Text(
-                        "Criar ficha",
+                        "Rolar!",
                         style: TextStyle(fontSize: 25),
                       ),
                     ),
@@ -178,10 +203,10 @@ class _TelaFichabasicaState extends State<TelaFichabasica> {
                         minimumSize: const Size(100, 50),
                       ),
                       onPressed: () {
-                        Navigator.pop(
+                        Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => const TelaListaFicha(),
+                            builder: (context) => const TelaMestragemMenu(),
                           ),
                         );
                       },
@@ -198,26 +223,38 @@ class _TelaFichabasicaState extends State<TelaFichabasica> {
 
           //erro
           if (erro)
-            Container(
-              padding: const EdgeInsets.all(16),
-              child: const Text(
-                "Preencha todos os dados!",
+            const Positioned(
+              bottom: 280,
+              child: Text(
+                "Fracasso!",
                 style: TextStyle(
-                  color: Color.fromARGB(255, 255, 0, 0),
+                  color: Colors.red,
                   fontSize: 25,
                   fontWeight: FontWeight.bold,
                 ),
               ),
             ),
 
-          //sucesso
           if (sucesso)
-            Container(
-              padding: const EdgeInsets.all(16),
-              child: const Text(
-                "Ficha criada com sucesso!",
+            const Positioned(
+              bottom: 280,
+              child: Text(
+                "Sucesso!",
                 style: TextStyle(
-                  color: Color.fromARGB(255, 0, 255, 0),
+                  color: Colors.green,
+                  fontSize: 25,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ),
+
+          if (preencha)
+            const Positioned(
+              bottom: 280,
+              child: Text(
+                "Preencha todos os dados!",
+                style: TextStyle(
+                  color: Colors.yellow,
                   fontSize: 25,
                   fontWeight: FontWeight.bold,
                 ),

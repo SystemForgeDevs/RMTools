@@ -17,7 +17,6 @@ class _TelaVantagensState extends State<TelaVantagens> {
   int pontosDisponiveis = 0;
   bool carregando = true;
 
-
 final Map<String, TipoVantagem> tipoPorItem = {
   "Agarrar Aprimorado": TipoVantagem.checkbox,
   "Agarrar Preciso": TipoVantagem.checkbox,
