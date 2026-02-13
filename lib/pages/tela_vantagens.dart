@@ -37,7 +37,7 @@ final Map<String, TipoVantagem> tipoPorItem = {
   "Ataque Preciso": TipoVantagem.botoes,
   "Atraente": TipoVantagem.botoes,
   "Avaliação": TipoVantagem.checkbox,
-  "Ação em Movimento": TipoVantagem.botoes,
+  "Ação em Movimento": TipoVantagem.checkbox,
   "Bem Informado": TipoVantagem.checkbox,
   "Bem Relacionado": TipoVantagem.checkbox,
   "Benefício": TipoVantagem.botoes,

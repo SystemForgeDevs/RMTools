@@ -15,7 +15,7 @@ int testeGraduado(int cd,int dado,int bonus,int modificador){
     if(dado==20) grau = 1;
     
     if(diferenca>=0){
-      grau = 1+(diferenca~/5);
+      grau = 1 + (diferenca~/5);
     }else {
       grau = -1 + (diferenca~/5);
     }

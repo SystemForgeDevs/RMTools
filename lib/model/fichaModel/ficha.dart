@@ -172,7 +172,7 @@ class Vantagem {
 class Pericia {
 
   final String nome;
-  int? bonus;
+  int bonus;
   int graduacao;
   
 
@@ -242,7 +242,7 @@ class Ficha{
     "Acrobacia": "agilidade",
     "Atletismo": "forca",
     "Combate Dis.": "destreza",
-    "Combate CaC.": "luta",
+    "Combate Corpo a corpo": "luta",
     "Enganação": "presenca",
     "Especialidade":"presenca",
     "Furtividade": "agilidade",
@@ -303,11 +303,37 @@ class Ficha{
   Ficha criarFicha({ required int np ,required String nomeJogador ,required String nomePersonagem})  
     {return Ficha.criar(np: np, nomeJogador: nomeJogador, nomePersonagem: nomePersonagem);}
 
+
+ 
+
+
   bool adicionarHabilidade(String nome, int valor){
         int habilidade= habilidades[nome]!;
         bool validar=false;
-        
+        final novoValorHabilidade = habilidade + 1;
         if(valor>0 && pontosD>=2 && habilidade<20 ){
+          if(nome == 'luta'){
+            if(!simulacaoPericia('Combate Corpo a corpo','habilidade')){
+              return false; 
+            }
+          }else if (nome == 'destreza'){
+            if(!simulacaoPericia('Combate Dis.','habilidade')){
+              return false; 
+            }
+          }
+          for (final entry in habilidadePorPericia.entries) {
+            if (entry.value == nome) {
+              final nomePericia = entry.key;
+              final pericia = verificarPericia(nomePericia);
+              final graduacao = pericia?.graduacao ?? 0;
+
+              final novoBonus = novoValorHabilidade + graduacao;
+
+              if (novoBonus > np + 10) {
+                return false;
+              }
+            }
+          }
           pontosD -= 2;
           habilidade += valor;
           validar=true;
@@ -344,20 +370,114 @@ class Ficha{
       final valorHabilidade = habilidades[habilidadeBase];
       if (valorHabilidade == null) continue;
 
+      
       p.bonus = p.graduacao + valorHabilidade;
     }
   }
 
+  int calcularAtaqueCorpo() {
+    final habilidade = habilidades['luta'] ?? 0;
+
+    final pericia = verificarPericia('Combate Corpo a corpo')?.graduacao ?? 0;
+
+    final vantagem = verificarVantagem('Ataque Corpo-a-Corpo')?.graduacao ?? 0;
+
+    return habilidade + pericia + vantagem;
+  }
+
+  int calcularAtaqueDistancia() {
+  final habilidade = habilidades['destreza'] ?? 0;
+
+  final pericia = verificarPericia('Combate Dis.')?.graduacao ?? 0;
+
+  final vantagem = verificarVantagem('Ataque à Distância')?.graduacao ?? 0;
+
+  return habilidade + pericia + vantagem;
+}
+
+
+  bool simulacaoPericia(String nome,String categoria){
+    
+    switch (categoria){
+
+      case 'pericia':
+
+        if (nome == 'Combate Corpo a corpo') {
+          return calcularAtaqueCorpo() + 2 <= np + 10;
+        }
+
+        if (nome == 'Combate Dis.') {
+          return calcularAtaqueDistancia() + 2 <= np + 10;
+        }
+
+        return true;
+
+
+      case 'habilidade':
+        if (nome == 'Combate Corpo a corpo') {
+          return calcularAtaqueCorpo() + 1 <= np + 10;
+        }
+
+        if (nome == 'Combate Dis.') {
+          return calcularAtaqueDistancia() + 1 <= np + 10;
+        }
+
+        return true;
+
+
+      case 'vantagem':
+        if (nome == 'Ataque Corpo-a-Corpo') {
+          return calcularAtaqueCorpo() + 1 <= np + 10;
+        }
+
+        if (nome == 'Ataque à Distância') {
+          return calcularAtaqueDistancia() + 1 <= np + 10;
+        }
+
+
+
+
+      default:
+        return true;
+      
+    
+
+      }
+    //simulação
+    return true;
+  }
+
+  bool validarPericiaNormal(String nome, int incremento) {
+    final habilidadeBase = habilidadePorPericia[nome];
+    if (habilidadeBase == null) return true;
+
+    final valorHabilidade = habilidades[habilidadeBase] ?? 0;
+    final periciaAtual = verificarPericia(nome)?.graduacao ?? 0;
+
+    final novoBonus = valorHabilidade + periciaAtual + incremento;
+
+    return novoBonus <= np + 10;
+  }
+
+
   bool adicionarPericia(String nome,int valor){
     Pericia? existe = verificarPericia(nome);
     bool validar =  false;
+
+    //simulação
     
+
+
     //adicionar
     if(existe==null && valor>0 && pontosD>=1){
+      if(!simulacaoPericia(nome,'pericia')) return false;
+      if(!validarPericiaNormal(nome, 2)) return false;
       pericias.add(Pericia(nome: nome, graduacao: 2));
       pontosD -=1;
       validar=true;
     }else if(existe != null && valor>0 && pontosD>=1){
+      if(!simulacaoPericia(nome,'pericia')) return false;
+      if(!validarPericiaNormal(nome, 2)) return false;
       existe.graduacao +=2;
       pontosD-=1;
       validar=true;
@@ -436,10 +556,12 @@ class Ficha{
     
     //adicionar
     if(existir==null && pontosD>=1 && valor>0){
+      if(!simulacaoPericia(nome, 'vantagem')) return false;
       vantagens.add(Vantagem(nome: nome, graduacao: 1));
       pontosD-=1;
       validar=true;
     }else if(existir!= null && pontosD>=1 && valor>0){
+      if(!simulacaoPericia(nome, 'vantagem')) return false;
       int limite=limiteVantagem(existir.nome);
       if (existir.graduacao+1<=limite){
         existir.graduacao+=1;
