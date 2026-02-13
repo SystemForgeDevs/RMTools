@@ -151,30 +151,30 @@ Future<void> exportarFicha(Ficha ficha) async {
   final bytes = data.buffer.asUint8List();
   final docx = await DocxTemplate.fromBytes(bytes);
 
-  final vantagensRows = <RowContent>[];
+  // CORREÇÃO: Criar lista de Content para vantagens
+  final vantagensContent = <Content>[];
 
   for (var v in ficha.vantagens) {
-    vantagensRows.add(
-      RowContent()
+    vantagensContent.add(
+      Content()
         ..add(TextContent("nome", v.nome))
         ..add(TextContent("graduacao", v.graduacao.toString()))
     );
   }
 
-  final periciasRows = <RowContent>[];
+  // CORREÇÃO: Criar lista de Content para pericias
+  final periciasContent = <Content>[];
 
   for (var p in ficha.pericias) {
-    periciasRows.add(
-      RowContent()
+    periciasContent.add(
+      Content()
         ..add(TextContent("nome", p.nome))
         ..add(TextContent("graduacao", p.graduacao.toString()))
         ..add(TextContent("bonus", p.bonus.toString()))
     );
   }
 
-
   final content = Content()
-
     // Dados básicos
     ..add(TextContent("np", ficha.np.toString()))
     ..add(TextContent("nomeJogador", ficha.nomeJogador))
@@ -189,18 +189,13 @@ Future<void> exportarFicha(Ficha ficha) async {
     ..add(TextContent("prontidao", ficha.habilidades['prontidao'].toString()))
     ..add(TextContent("presenca", ficha.habilidades['presenca'].toString()))
     ..add(TextContent("vigor", ficha.habilidades['vigor'].toString()))
-
     ..add(TextContent("custoHabilidades", ficha.custoHabilidades.toString()))
 
-    // Vantagens    
-    ..add(ListContent(
-      "vantagens",vantagensRows
-    ))
+    // Vantagens
+    ..add(ListContent("vantagens", vantagensContent))
 
     // Perícias
-    ..add(ListContent(
-      "pericias", periciasRows
-    ))
+    ..add(ListContent("pericias", periciasContent))
 
     // Resumo
     ..add(TextContent("totalGasto", ficha.totalGasto.toString()))
@@ -214,8 +209,5 @@ Future<void> exportarFicha(Ficha ficha) async {
 
   await file.writeAsBytes(gerado!);
 }
-
-
-
 } 
 
