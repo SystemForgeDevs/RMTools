@@ -151,63 +151,16 @@ Future<void> exportarFicha(Ficha ficha) async {
   final bytes = data.buffer.asUint8List();
   final docx = await DocxTemplate.fromBytes(bytes);
 
-  // CORREÇÃO: Criar lista de Content para vantagens
-  final vantagensContent = <Content>[];
-
-  for (var v in ficha.vantagens) {
-    vantagensContent.add(
-      Content()
-        ..add(TextContent("nome", v.nome))
-        ..add(TextContent("graduacao", v.graduacao.toString()))
-    );
-  }
-
-  // CORREÇÃO: Criar lista de Content para pericias
-  final periciasContent = <Content>[];
-
-  for (var p in ficha.pericias) {
-    periciasContent.add(
-      Content()
-        ..add(TextContent("nome", p.nome))
-        ..add(TextContent("graduacao", p.graduacao.toString()))
-        ..add(TextContent("bonus", p.bonus.toString()))
-    );
-  }
-
+  
   final content = Content()
-    // Dados básicos
-    ..add(TextContent("np", ficha.np.toString()))
-    ..add(TextContent("nomeJogador", ficha.nomeJogador))
-    ..add(TextContent("nomePersonagem", ficha.nomePersonagem))
+  ..add(TextContent("np", ficha.np.toString()))
+  ..add(TextContent("nomeJogador", ficha.nomeJogador))
+  ..add(TextContent("nomePersonagem", ficha.nomePersonagem))
+  ..add(TextContent("forca", ficha.habilidades['forca'].toString()))
+  // ... outros
+  ..add(TextContent("totalGasto", ficha.totalGasto.toString()))
+  ..add(TextContent("pontosRestantes", ficha.pontosRestantes.toString()));
+// Sem ListContent
+  } 
 
-    // Habilidades
-    ..add(TextContent("forca", ficha.habilidades['forca'].toString()))
-    ..add(TextContent("agilidade", ficha.habilidades['agilidade'].toString()))
-    ..add(TextContent("destreza", ficha.habilidades['destreza'].toString()))
-    ..add(TextContent("luta", ficha.habilidades['luta'].toString()))
-    ..add(TextContent("intelecto", ficha.habilidades['intelecto'].toString()))
-    ..add(TextContent("prontidao", ficha.habilidades['prontidao'].toString()))
-    ..add(TextContent("presenca", ficha.habilidades['presenca'].toString()))
-    ..add(TextContent("vigor", ficha.habilidades['vigor'].toString()))
-    ..add(TextContent("custoHabilidades", ficha.custoHabilidades.toString()))
-
-    // Vantagens
-    ..add(ListContent("vantagens", vantagensContent))
-
-    // Perícias
-    ..add(ListContent("pericias", periciasContent))
-
-    // Resumo
-    ..add(TextContent("totalGasto", ficha.totalGasto.toString()))
-    ..add(TextContent("pontosRestantes", ficha.pontosRestantes.toString()));
-
-  final gerado = await docx.generate(content);
-
-  final file = File(
-    "/storage/emulated/0/Download/${ficha.nomePersonagem}.docx"
-  );
-
-  await file.writeAsBytes(gerado!);
 }
-} 
-
