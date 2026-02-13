@@ -62,7 +62,7 @@ flutter:
 
   assets:
     - lib/img/logo.png
-    - lib/assets/personagem.docx
+    - assets/personagem.docx
 
   # To add assets to your application, add an assets section, like this:
   # assets:
