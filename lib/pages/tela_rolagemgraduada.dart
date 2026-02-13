@@ -128,7 +128,7 @@ class _TelaRolagemGraduadaState extends State<TelaRolagemGraduada> {
                     value: valorCD.toDouble(),
                     min: 1,
                     max: 50,
-                    divisions: 49,
+                    divisions: 50,
                     label: valorCD.toString(),
                     onChanged: (double novoValor) {
                       setState(() {

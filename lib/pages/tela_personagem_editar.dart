@@ -3,6 +3,7 @@ import 'package:rmtools/pages/tela_habilidades.dart';
 import 'package:rmtools/pages/tela_listafichas.dart';
 import 'package:rmtools/pages/tela_pericias.dart';
 import 'package:rmtools/pages/tela_vantagens.dart';
+import 'package:rmtools/model/fichaModel/armazenamento_ficha.dart';
 
 class TelaPersonagemEditar extends StatefulWidget{
   final String nomePersonagem;
@@ -174,7 +175,53 @@ class _TelaPersonagemEditarState extends State<TelaPersonagemEditar> {
                       ),
 
                       //função botão
-                      onPressed: () {},
+                      onPressed: () async {
+                        final repo = FichaRepository();
+
+                        final ficha = await repo.carregar(widget.nomePersonagem);
+
+                        if (ficha != null) {
+                          repo.exportarFicha(ficha);
+                        }
+
+                        showDialog(
+                          // ignore: use_build_context_synchronously
+                          context: context,
+                          barrierDismissible: false, //<-- isso nao deixa clicar fora para sair
+                          builder: (BuildContext context){
+                            return AlertDialog(
+                              backgroundColor: const Color.fromARGB(255, 21, 22, 34),
+                              title: Text(
+                                "Exportando...",
+                                style: TextStyle(
+                                  color: Colors.white
+                                ),
+                              ),
+                              content: Text(
+                                "A ficha está sendo Exportada para DOCX!",
+                                style: TextStyle(
+                                  color: Colors.white
+                                ),
+                              ),
+                              actions: [
+                                
+                                //***Cancelar
+                                TextButton(
+                                  onPressed: () {
+                                    Navigator.of(context).pop();//<-- fecha o pop-up
+                                  },
+                                  child: Text(
+                                    "Cancelar",
+                                    style: TextStyle(
+                                      color: Colors.grey
+                                    ),
+                                  ),
+                                ),
+                              ]
+                            );
+                          },
+                        );
+                      },
                         
                       //texto botão
                       child: const Text(
@@ -208,7 +255,6 @@ class _TelaPersonagemEditarState extends State<TelaPersonagemEditar> {
                           style: TextStyle(fontSize: 25),
                         ),
                       ),
-
                       SizedBox(height: 20),
                     ],
                   ),

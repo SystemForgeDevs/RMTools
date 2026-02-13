@@ -4,7 +4,6 @@ import 'package:rmtools/pages/tela_personagem_editar.dart';
 import 'package:rmtools/pages/tela_principal.dart';
 import 'package:rmtools/model/fichaModel/armazenamento_ficha.dart';
 
-
 class TelaListaFicha extends StatefulWidget { 
   const TelaListaFicha({super.key}); 
   
