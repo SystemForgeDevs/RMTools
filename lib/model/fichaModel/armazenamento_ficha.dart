@@ -151,6 +151,28 @@ Future<void> exportarFicha(Ficha ficha) async {
   final bytes = data.buffer.asUint8List();
   final docx = await DocxTemplate.fromBytes(bytes);
 
+  final vantagensRows = <RowContent>[];
+
+  for (var v in ficha.vantagens) {
+    vantagensRows.add(
+      RowContent()
+        ..add(TextContent("nome", v.nome))
+        ..add(TextContent("graduacao", v.graduacao.toString()))
+    );
+  }
+
+  final periciasRows = <RowContent>[];
+
+  for (var p in ficha.pericias) {
+    periciasRows.add(
+      RowContent()
+        ..add(TextContent("nome", p.nome))
+        ..add(TextContent("graduacao", p.graduacao.toString()))
+        ..add(TextContent("bonus", p.bonus.toString()))
+    );
+  }
+
+
   final content = Content()
 
     // Dados básicos
@@ -170,36 +192,27 @@ Future<void> exportarFicha(Ficha ficha) async {
 
     ..add(TextContent("custoHabilidades", ficha.custoHabilidades.toString()))
 
-    // Vantagens
+    // Vantagens    
     ..add(ListContent(
-      "vantagens",
-      ficha.vantagens.map((v) => RowContent()
-        ..add(TextContent("nome", v.nome))
-        ..add(TextContent("graduacao", v.graduacao.toString()))
-      ).toList()
+      "vantagens",vantagensRows
     ))
 
     // Perícias
     ..add(ListContent(
-      "pericias",
-      ficha.pericias.map((p) => RowContent()
-        ..add(TextContent("nome", p.nome))
-        ..add(TextContent("graduacao", p.graduacao.toString()))
-        ..add(TextContent("bonus", p.bonus.toString()))
-      ).toList()
+      "pericias", periciasRows
     ))
 
     // Resumo
     ..add(TextContent("totalGasto", ficha.totalGasto.toString()))
     ..add(TextContent("pontosRestantes", ficha.pontosRestantes.toString()));
 
-  final generated = await docx.generate(content);
+  final gerado = await docx.generate(content);
 
   final file = File(
     "/storage/emulated/0/Download/${ficha.nomePersonagem}.docx"
   );
 
-  await file.writeAsBytes(generated!);
+  await file.writeAsBytes(gerado!);
 }
 
 
