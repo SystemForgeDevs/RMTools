@@ -29,6 +29,8 @@ import 'dart:io';
 //import 'dart:nativewrappers/_internal/vm/lib/ffi_native_type_patch.dart';
 // import 'package:path_provider/path_provider.dart';
 import 'package:rmtools/model/fichaModel/ficha.dart';
+import 'package:docx_template/docx_template.dart';
+import 'package:flutter/services.dart';
 
 class FichaRepository {
 
@@ -115,6 +117,7 @@ class FichaRepository {
 
     return nomes;
   }
+  
   Future<void> excluir(String nomePersonagem) async {
     final file = await _file(nomePersonagem);
     
@@ -141,6 +144,65 @@ Future<List<String>> carregarNomesComponentes(String nomePersonagem, String? nom
 
   return poder.componentes.map((c) => c.nomeComponente).toList();
 }
+
+
+Future<void> exportarFicha(Ficha ficha) async {
+  final data = await rootBundle.load('assets/personagem.docx');
+  final bytes = data.buffer.asUint8List();
+  final docx = await DocxTemplate.fromBytes(bytes);
+
+  final content = Content()
+
+    // Dados básicos
+    ..add(TextContent("np", ficha.np.toString()))
+    ..add(TextContent("nomeJogador", ficha.nomeJogador))
+    ..add(TextContent("nomePersonagem", ficha.nomePersonagem))
+
+    // Habilidades
+    ..add(TextContent("forca", ficha.habilidades['forca'].toString()))
+    ..add(TextContent("agilidade", ficha.habilidades['agilidade'].toString()))
+    ..add(TextContent("destreza", ficha.habilidades['destreza'].toString()))
+    ..add(TextContent("luta", ficha.habilidades['luta'].toString()))
+    ..add(TextContent("intelecto", ficha.habilidades['intelecto'].toString()))
+    ..add(TextContent("prontidao", ficha.habilidades['prontidao'].toString()))
+    ..add(TextContent("presenca", ficha.habilidades['presenca'].toString()))
+    ..add(TextContent("vigor", ficha.habilidades['vigor'].toString()))
+
+    ..add(TextContent("custoHabilidades", ficha.custoHabilidades.toString()))
+
+    // Vantagens
+    ..add(ListContent(
+      "vantagens",
+      ficha.vantagens.map((v) => RowContent()
+        ..add(TextContent("nome", v.nome))
+        ..add(TextContent("graduacao", v.graduacao.toString()))
+      ).toList()
+    ))
+
+    // Perícias
+    ..add(ListContent(
+      "pericias",
+      ficha.pericias.map((p) => RowContent()
+        ..add(TextContent("nome", p.nome))
+        ..add(TextContent("graduacao", p.graduacao.toString()))
+        ..add(TextContent("bonus", p.bonus.toString()))
+      ).toList()
+    ))
+
+    // Resumo
+    ..add(TextContent("totalGasto", ficha.totalGasto.toString()))
+    ..add(TextContent("pontosRestantes", ficha.pontosRestantes.toString()));
+
+  final generated = await docx.generate(content);
+
+  final file = File(
+    "/storage/emulated/0/Download/${ficha.nomePersonagem}.docx"
+  );
+
+  await file.writeAsBytes(generated!);
+}
+
+
 
 } 
 

@@ -234,6 +234,32 @@ class Ficha{
   int get aparar => habilidades['luta'] ?? 0;
   int get vontade => habilidades['prontidao'] ?? 0;
   
+  int get custoHabilidades {
+  return habilidades.values.fold(0, (soma, v) => soma + (v * 2));
+  }
+
+  int get custoPericias {
+    int totalGraduacoes =
+        pericias.fold(0, (soma, p) => soma + p.graduacao);
+
+    return (totalGraduacoes / 2).ceil();
+  }
+
+  int get custoVantagens {
+    return vantagens.fold(0, (soma, v) => soma + v.graduacao);
+  }
+
+  int get totalGasto {
+    return custoHabilidades +
+         custoPericias +
+         custoVantagens;
+  }
+
+  int get pontosRestantes {
+    return pontosBase - totalGasto;
+  }
+
+
   List<Vantagem> vantagens = [];
   List<Pericia> pericias = [];
   List<Poder> poderes = [];
@@ -361,6 +387,7 @@ class Ficha{
       }
       return null;
     }
+  
   
   void recalcularBonusPericias() {
     for (final p in pericias) {
