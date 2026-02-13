@@ -4,7 +4,6 @@ import 'package:rmtools/pages/tela_listafichas.dart';
 import 'package:rmtools/pages/tela_pericias.dart';
 import 'package:rmtools/pages/tela_vantagens.dart';
 
-
 class TelaPersonagemEditar extends StatefulWidget{
   final String nomePersonagem;
   const TelaPersonagemEditar({super.key, required this.nomePersonagem});
@@ -13,10 +12,8 @@ class TelaPersonagemEditar extends StatefulWidget{
   State<TelaPersonagemEditar> createState() => _TelaPersonagemEditarState();
 }
 
-
 class _TelaPersonagemEditarState extends State<TelaPersonagemEditar> {
   
-
   @override
   Widget build(BuildContext context){
     return Scaffold(

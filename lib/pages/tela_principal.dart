@@ -1,6 +1,7 @@
 // ignore_for_file: file_names
 import 'package:flutter/material.dart';
 import 'package:rmtools/pages/tela_listafichas.dart';
+import 'package:rmtools/pages/tela_mestragremmenu.dart';
 
 
 class TelaPrincipal extends StatelessWidget{
@@ -10,6 +11,7 @@ class TelaPrincipal extends StatelessWidget{
   @override
   Widget build(BuildContext context){
     return Scaffold(
+
       //Scafold evita a linha amarela(sublinhado) no que tiver acima(eu acho)
       backgroundColor: const Color.fromARGB(255, 21, 22, 34),
         body: Align(
@@ -76,7 +78,14 @@ class TelaPrincipal extends StatelessWidget{
                 ),
 
                 //função botão
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const TelaMestragemMenu(),
+                    )
+                  );
+                },
                   
                 //texto botão
                 child: const Text(
