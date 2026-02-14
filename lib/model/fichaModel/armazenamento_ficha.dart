@@ -268,6 +268,17 @@ function criarBlocos(quantidade) {
 }
 
 function salvarArquivo() {
+
+  // Atualiza todos os inputs
+  document.querySelectorAll("input").forEach(input => {
+    input.setAttribute("value", input.value);
+  });
+
+  // Atualiza todos os textareas
+  document.querySelectorAll("textarea").forEach(textarea => {
+    textarea.innerHTML = textarea.value;
+  });
+
   const conteudo = document.documentElement.outerHTML;
   const blob = new Blob([conteudo], { type: "text/html" });
   const a = document.createElement("a");
@@ -275,6 +286,7 @@ function salvarArquivo() {
   a.download = "poderes_preenchido.html";
   a.click();
 }
+
 
 criarBlocos(10); // AQUI define quantos slots você quer
 </script>
