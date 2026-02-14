@@ -165,28 +165,16 @@ class _TelaPericias extends State<TelaPericias> {
                           width: 300,
                           child: SingleChildScrollView(
                             child: Text(
-                              "Habilidades são como o sistema chama os atributos, ex: força. "
-                              "Cada graduação em uma habilidade custa 2 pontos de poder, retirar concede 2 pontos,"
-                              " contudo tem um limite de quanto você consegue retirar de graduações, o limite é até -5 de graduação"
-                              "Segue a escala (material oficial):\n\n"
-                              "-5 — Completamente inepto\n"
-                              "-4 — Criança muito nova (<6 anos)\n"
-                              "-3 — Criança nova (7-9)\n"
-                              "-2 — Criança (10-13), idoso ou debilitado\n"
-                              "-1 — Abaixo da média; adolescente\n"
-                              "0 — Adulto médio\n"
-                              "1 — Acima da média\n"
-                              "2 — Bem acima da média\n"
-                              "3 — Talentoso\n"
-                              "4 — Altamente talentoso\n"
-                              "5 — O melhor de um país\n"
-                              "6 — Um dos melhores do mundo\n"
-                              "7 — Ápice humano\n"
-                              "8 — Super-humano fraco\n"
-                              "10 — Super-humano moderado\n"
-                              "13 — Super-humano poderoso\n"
-                              "15 — Super-humano muito poderoso\n"
-                              "20 — Cósmico",
+                              """As perícias são habilidades aprendidas, uma combinação de treinamento (a perícia) e talento natural (uma graduação de habilidade).\n\n
+
+                              Cada perícia tem uma graduação, usada como um bônus à rolagem do dado ao se usar a perícia em questão.\n\n
+                              
+                              Dê ao seu herói graduações em perícia gastando pontos de poder: 2 graduações em perícia por ponto de poder. Você pode dividir as graduações em perícias diferentes.\n\n
+                              
+                              Os personagens podem realizar algumas tarefas sem treinamento, usando apenas seu talento bruto (como definido por suas graduações de habilidade), mas personagens peritos são melhores do que isso.\n\n
+                              
+                              Aqueles com as combinações certas de perícias e vantagens podem até mesmo se sair bem contra oponentes superpoderosos.
+                              """,
                               style: TextStyle(fontSize: 16, color: Colors.white),
                             ),
                           ),

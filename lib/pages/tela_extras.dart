@@ -131,28 +131,7 @@ class _TelaExtras extends State<TelaExtras>{
                           width: 300,
                           child: SingleChildScrollView(
                             child: Text(
-                              "Habilidades são como o sistema chama os atributos, ex: força. "
-                              "Cada graduação em uma habilidade custa 2 pontos de poder, retirar concede 2 pontos,"
-                              " contudo tem um limite de quanto você consegue retirar de graduações, o limite é até -5 de graduação"
-                              "Segue a escala (material oficial):\n\n"
-                              "-5 — Completamente inepto\n"
-                              "-4 — Criança muito nova (<6 anos)\n"
-                              "-3 — Criança nova (7-9)\n"
-                              "-2 — Criança (10-13), idoso ou debilitado\n"
-                              "-1 — Abaixo da média; adolescente\n"
-                              "0 — Adulto médio\n"
-                              "1 — Acima da média\n"
-                              "2 — Bem acima da média\n"
-                              "3 — Talentoso\n"
-                              "4 — Altamente talentoso\n"
-                              "5 — O melhor de um país\n"
-                              "6 — Um dos melhores do mundo\n"
-                              "7 — Ápice humano\n"
-                              "8 — Super-humano fraco\n"
-                              "10 — Super-humano moderado\n"
-                              "13 — Super-humano poderoso\n"
-                              "15 — Super-humano muito poderoso\n"
-                              "20 — Cósmico",
+                              """ESQUIVA:\n\nA defesa Esquiva é baseada nas graduações de Agilidade. Ela inclui o tempo de reação, rapidez e coordenação geral, e é usada para evitar ataques à distância e outras ameaças em que os reflexos e a velocidade são importantes.\n\nFORTITUDE:\n\nA defesa Fortitude é baseada no Vigor e mede a saúde e salvamento a ameaças como veneno ou doenças. Ela reúne constituição, robustez, metabolismo e imunidade.\n\nAPARAR:\n\nA defesa Aparar é baseada em Luta. É a habilidade de bloquear ou evadir um golpe em corpo-a-corpo, através de uma habilidade superior de combate.\n\nRESISTÊNCIA:\n\nA defesa Resistência é baseada em Vigor e é o salvamento de dano ou ferimentos diretos.\n\nVONTADE:\n\nA defesa Vontade é baseada nas graduações de Prontidão. Ela mede a estabilidade mental, lucidez, determinação, autoconfiança e força de vontade, e é usada para resistir ataques mentais ou espirituais.""",
                               style: TextStyle(fontSize: 16, color: Colors.white),
                             ),
                           ),

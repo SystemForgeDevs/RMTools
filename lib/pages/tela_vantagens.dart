@@ -237,26 +237,8 @@ Future<void> _alterar(String chave, int delta) async {
                           width: 300,
                           child: SingleChildScrollView(
                             child: Text(
-                              "Vantagens custam 1 ponto por graduação. Algumas são únicas (Checkbox) e outras graduáveis (Botões).\n\n"
-                              "Segue a escala (material oficial):\n\n"
-                              "-5 — Completamente inepto\n"
-                              "-4 — Criança muito nova (<6 anos)\n"
-                              "-3 — Criança nova (7-9)\n"
-                              "-2 — Criança (10-13), idoso ou debilitado\n"
-                              "-1 — Abaixo da média; adolescente\n"
-                              "0 — Adulto médio\n"
-                              "1 — Acima da média\n"
-                              "2 — Bem acima da média\n"
-                              "3 — Talentoso\n"
-                              "4 — Altamente talentoso\n"
-                              "5 — O melhor de um país\n"
-                              "6 — Um dos melhores do mundo\n"
-                              "7 — Ápice humano\n"
-                              "8 — Super-humano fraco\n"
-                              "10 — Super-humano moderado\n"
-                              "13 — Super-humano poderoso\n"
-                              "15 — Super-humano muito poderoso\n"
-                              "20 — Cósmico",
+                              """As vantagens são classificadas em graduações e compradas com pontos de poder, da mesma forma que as habilidades e perícias. \n\nCada graduação em uma vantagem custa 1 ponto de poder. \n\nAlgumas vantagens não têm graduações e são adquiridas apenas uma vez (na prática, é como se fossem limitadas a 1 graduação).
+                              """,
                               style: TextStyle(fontSize: 16, color: Colors.white),
                             ),
                           ),
