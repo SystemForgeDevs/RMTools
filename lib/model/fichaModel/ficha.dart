@@ -295,10 +295,15 @@ class Ficha{
     this.vantagens,
     this.pericias,
     this.poderes,{
+    // ignore: unused_element_parameter
     this.esquiva = 0,
+    // ignore: unused_element_parameter
     this.aparar = 0,
+    // ignore: unused_element_parameter
     this.fortitude = 0,
+    // ignore: unused_element_parameter
     this.resistencia = 0,
+    // ignore: unused_element_parameter
     this.vontade = 0,
 }) : pontosBase = np*15,
       pontosD=np*15;

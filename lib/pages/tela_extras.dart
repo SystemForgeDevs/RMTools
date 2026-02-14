@@ -2,29 +2,26 @@ import 'package:flutter/material.dart';
 import 'package:rmtools/model/fichaModel/armazenamento_ficha.dart';
 import 'package:rmtools/pages/tela_personagem_editar.dart';
 
-class TelaHabilidades extends StatefulWidget{
+class TelaExtras extends StatefulWidget{
   final String nomePersonagem;
-  const TelaHabilidades({super.key, required this.nomePersonagem});
+  const TelaExtras({super.key, required this.nomePersonagem});
 
   @override
-  State<TelaHabilidades> createState() => _TelaHabilidades();
+  State<TelaExtras> createState() => _TelaExtras();
 }
 
-class _TelaHabilidades extends State<TelaHabilidades>{
+class _TelaExtras extends State<TelaExtras>{
   @override
   void initState(){
     super.initState();
     _lerJson();
   }
     
-  int forca = 0;
-  int agilidade =  0;
-  int destreza = 0;
-  int luta = 0;
-  int intelecto = 0;
-  int prontidao = 0;
-  int presenca = 0;
-  int vigor = 0;
+  int esquiva = 0;
+  int fortitude =  0;
+  int resistencia = 0;
+  int aparar = 0;
+  int vontade = 0;
   int pontosDisponiveis = 0;
 
 
@@ -35,14 +32,11 @@ class _TelaHabilidades extends State<TelaHabilidades>{
 
     if(ficha != null){
       setState(() {
-        forca = ficha.habilidades["forca"] ?? 0;
-        agilidade = ficha.habilidades["agilidade"] ?? 0;
-        destreza = ficha.habilidades["destreza"] ?? 0;
-        luta = ficha.habilidades["luta"] ?? 0;
-        intelecto = ficha.habilidades["intelecto"] ?? 0;
-        prontidao = ficha.habilidades["prontidao"] ?? 0;
-        presenca = ficha.habilidades["presenca"] ?? 0;
-        vigor = ficha.habilidades["vigor"] ?? 0;
+        esquiva = ficha.esquiva;
+        fortitude = ficha.fortitude;
+        resistencia = ficha.resistencia;
+        aparar = ficha.aparar;
+        vontade = ficha.vontade;
         pontosDisponiveis = ficha.pontosD;
       });
     }
@@ -52,9 +46,11 @@ class _TelaHabilidades extends State<TelaHabilidades>{
   Future<void> alterar(String chave, int valor, Function(int,int) atualizar) async {
     final repo = FichaRepository();
     final ficha = await repo.carregar(widget.nomePersonagem);
-    if (ficha != null && ficha.adicionarHabilidade(chave, valor)) {
+
+    if (ficha != null && ficha.adicionarDefesas(chave, valor)) {
       await repo.salvar(ficha);
-      atualizar(ficha.habilidades[chave] ?? 0, ficha.pontosD);
+
+      await _lerJson(); //recarrega os valores na tela
     }
   }
 
@@ -65,7 +61,7 @@ class _TelaHabilidades extends State<TelaHabilidades>{
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Text(label, style: const TextStyle(color: Colors.white, fontSize: 40)),
+          Text(label, style: const TextStyle(color: Colors.white, fontSize: 35)),
           Row(
             children: [
 
@@ -191,73 +187,48 @@ class _TelaHabilidades extends State<TelaHabilidades>{
 
         
           //***Força***
-          extraUI("Força:", "forca", forca, (v, p){
+          extraUI("Esquiva:", "esquiva", esquiva, (v, p){
             setState(() {
-              forca = v;
+              esquiva = v;
               pontosDisponiveis = p;
             });
           }),
 
 
           //***Agilidade***
-          extraUI("Agilidade:", "agilidade", agilidade, (v, p){
+          extraUI("Aparar:", "aparar", aparar, (v, p){
             setState(() {
-              agilidade = v;
+              aparar = v;
               pontosDisponiveis = p;
             });
           }),
 
 
           //***Destreza***
-          extraUI("Destreza:", "destreza", destreza, (v, p){
+          extraUI("Fortitude:", "fortitude", fortitude, (v, p){
             setState(() {
-              destreza = v;
+              fortitude = v;
               pontosDisponiveis = p;
             });
           }),
 
 
           //***Luta***
-          extraUI("Luta:", "luta", luta, (v, p){
+          extraUI("Resistência:", "resistencia", resistencia, (v, p){
             setState(() {
-              luta = v;
+              resistencia = v;
               pontosDisponiveis = p;
             });
           }),
 
 
           //***Intelecto***
-          extraUI("Intelecto:", "intelecto", intelecto, (v, p){
+          extraUI("Vontade:", "vontade", vontade, (v, p){
             setState(() {
-              intelecto = v;
+              vontade = v;
               pontosDisponiveis = p;
             });
           }),
-
-          //***Prontidão***
-          extraUI("Prontidão:", "prontidao", prontidao, (v, p){
-            setState(() {
-              prontidao = v;
-              pontosDisponiveis = p;
-            });
-          }),
-
-          //***Presença***
-          extraUI("Presença:", "presenca", presenca, (v, p){
-            setState(() {
-              presenca = v;
-              pontosDisponiveis = p;
-            });
-          }),
-
-          //***Vigor***
-          extraUI("Vigor:", "vigor", vigor, (v, p){
-            setState(() {
-              vigor = v;
-              pontosDisponiveis = p;
-            });
-          }),
-
 
           //***Espaçamento***
           Spacer(),

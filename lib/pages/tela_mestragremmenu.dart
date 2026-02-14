@@ -96,64 +96,6 @@ class _TelaMestragemMenuState extends State<TelaMestragemMenu> {
                         ),
                       ),
                     ),
-                    
-
-                    //***espaçamento***
-                    const SizedBox(height: 40),
-
-
-                    //***BOTÃO Perícias***
-                    ElevatedButton(
-                      
-                    //tamanho botão
-                    style: ElevatedButton.styleFrom(
-                      minimumSize: const Size(300, 100)
-                    ),
-
-                    //função botão
-                    onPressed: () {
-                      
-                    },
-                      
-                    //texto botão
-                    child: const Text(
-                      "Perícias", 
-                      style: TextStyle(
-                        fontSize: 25,
-                        ),
-                      ),
-                    ),
-
-
-                    //***espaçamento***
-                    const SizedBox(height: 40),
-
-
-                    //***BOTÃO Vantagens***
-                    ElevatedButton(
-                      
-                    //tamanho botão
-                    style: ElevatedButton.styleFrom(
-                      minimumSize: const Size(300, 100)
-                    ),
-
-                    //função botão
-                    onPressed: () {
-                      
-                    },
-                      
-                    //texto botão
-                    child: const Text(
-                      "Vantagens", 
-                      style: TextStyle(
-                        fontSize: 25,
-                        ),
-                      ),
-                    ),
-
-
-                    //***espaçamento***
-                    const SizedBox(height: 40),
 
                     //***espaçamento***
                     Spacer(),

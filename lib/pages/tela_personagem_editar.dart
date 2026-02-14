@@ -3,6 +3,7 @@ import 'package:rmtools/pages/tela_habilidades.dart';
 import 'package:rmtools/pages/tela_listafichas.dart';
 import 'package:rmtools/pages/tela_pericias.dart';
 import 'package:rmtools/pages/tela_vantagens.dart';
+import 'package:rmtools/pages/tela_extras.dart';
 import 'package:rmtools/model/fichaModel/armazenamento_ficha.dart';
 
 class TelaPersonagemEditar extends StatefulWidget{
@@ -155,6 +156,38 @@ class _TelaPersonagemEditarState extends State<TelaPersonagemEditar> {
                       //texto botão
                       child: const Text(
                         "Vantagens", 
+                        style: TextStyle(
+                          fontSize: 25,
+                          ),
+                        ),
+                      ),
+
+
+                      //***espaçamento***
+                      const SizedBox(height: 40),
+
+
+                      //***BOTÃO Vantagens***
+                      ElevatedButton(
+                        
+                      //tamanho botão
+                      style: ElevatedButton.styleFrom(
+                        minimumSize: const Size(300, 100)
+                      ),
+
+                      //função botão
+                      onPressed: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => TelaExtras(nomePersonagem: widget.nomePersonagem),
+                          ),
+                        );
+                      },
+                        
+                      //texto botão
+                      child: const Text(
+                        "Extras", 
                         style: TextStyle(
                           fontSize: 25,
                           ),
