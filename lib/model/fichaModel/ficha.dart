@@ -212,9 +212,9 @@ class Pericia {
 
 class Ficha{
 
-  final int np;
-  final String nomeJogador;
-  final String nomePersonagem;
+  int np;
+  String nomeJogador;
+  String nomePersonagem;
   final int pontosBase ;
   int pontosD;
   Map<String, int> habilidades = {
@@ -517,7 +517,6 @@ class Ficha{
       }
       return null;
     }
-  
   
   void recalcularBonusPericias() {
     for (final p in pericias) {
