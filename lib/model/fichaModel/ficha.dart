@@ -336,8 +336,29 @@ class Ficha{
   bool adicionarHabilidade(String nome, int valor){
         int habilidade= habilidades[nome]!;
         bool validar=false;
+        
         final novoValorHabilidade = habilidade + 1;
         if(valor>0 && pontosD>=2 && habilidade<20 ){
+        
+        
+        if(nome=='luta'){
+          if(novoValorHabilidade + resistencia>np*2) return false;
+        }
+        
+        if(nome=='agilidade'){
+          if(novoValorHabilidade + resistencia>np*2) return false;
+        }
+
+        if(nome=='prontidao'){
+          if(novoValorHabilidade + fortitude>np*2) return false;
+        }
+        
+        if(nome=='vigor'){
+          if(novoValorHabilidade + aparar>np*2) return false;
+          if(novoValorHabilidade + esquiva>np*2) return false;
+          if(novoValorHabilidade + vontade>np*2) return false;
+        }
+
           if(nome == 'luta'){
             if(!simulacaoPericia('Combate Corpo a corpo','habilidade')){
               return false; 
