@@ -335,52 +335,89 @@ class Ficha{
     {return Ficha.criar(np: np, nomeJogador: nomeJogador, nomePersonagem: nomePersonagem);}
 
   bool adicionarDefesas(String nome,int valor){
-    
-    if(nome=='esquiva'){
-      int teste = esquiva;
-      if(teste+1+ resistencia<=np*2){
+    if(pontosD>=1) return false;
+    //ESQUIVA
+    if(nome=='esquiva' && valor>0){
+      if(esquiva+1+ resistencia<=np*2){
         esquiva+=1;
         pontosD-=1;
         return true;
       }
     }
     
-    if(nome=='fortitude'){
-      int teste = fortitude;
-      if(teste+1+ vontade<=np*2){
+    if(nome=='esquiva' && valor<0 && esquiva - 1>=habilidades['agilidade']!){
+      esquiva-=1;
+      pontosD+=1;
+      return true;
+    
+    }
+
+
+    //FORTITUDE
+    if(nome=='fortitude' && valor>0){
+      if(fortitude+1+ vontade<=np*2){
         fortitude+=1;
         pontosD-=1;
         return true;
       }
     }
     
-    if(nome=='resistencia'){
-      int teste = resistencia;
-      if(teste+1+ aparar<=np*2 && teste+1+esquiva<=np*2){
+    
+    if(nome=='fortitude' && valor<0 && fortitude - 1>=habilidades['vigor']!){
+      fortitude-=1;
+      pontosD+=1;
+      return true;
+    }
+
+
+
+    //RESISTENCIA
+    if(nome=='resistencia' && valor>0){
+      
+      if(resistencia+1+ aparar<=np*2 && resistencia+1+esquiva<=np*2){
         resistencia+=1;
         pontosD-=1;
         return true;
       }
     }
 
-    if(nome=='aparar'){
-      int teste = aparar;
-      if(teste+1+ resistencia<=np*2){
+    if(nome=='resistencia' && valor<0 && resistencia - 1>=habilidades['vigor']!){
+      resistencia-=1;
+      pontosD+=1;
+      return true;
+    }
+
+    //APARAR
+    if(nome=='aparar' && valor>0){
+      if(aparar+1+ resistencia<=np*2){
         aparar+=1;
         pontosD-=1;
         return true;
       }
     }
     
-    if(nome=='vontade'){
-      int teste = vontade;
-      if(teste+1+ fortitude<=np*2){
+    if(nome=='aparar' && valor<0 && aparar - 1>=habilidades['luta']!){
+      aparar-=1;
+      pontosD+=1;
+      return true;
+    }
+
+    //VONTADE
+    if(nome=='vontade' && valor>0){
+      if(vontade+1+ fortitude<=np*2){
         vontade+=1;
         pontosD-=1;
         return true;
       }
     }
     
+    if(nome=='vontade' && valor<0 && vontade - 1>=habilidades['prontidao']!){
+      vontade-=1;
+      pontosD+=1;
+      return true;
+    }
+
+
     return false;
   }
  
