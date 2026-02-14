@@ -198,7 +198,7 @@ class _TelaPersonagemEditarState extends State<TelaPersonagemEditar> {
                                 ),
                               ),
                               content: Text(
-                                "A ficha está sendo Exportada para DOCX!",
+                                "A ficha foi Exportada para PDF com Sucesso!",
                                 style: TextStyle(
                                   color: Colors.white
                                 ),
@@ -211,7 +211,7 @@ class _TelaPersonagemEditarState extends State<TelaPersonagemEditar> {
                                     Navigator.of(context).pop();//<-- fecha o pop-up
                                   },
                                   child: Text(
-                                    "Cancelar",
+                                    "Fechar",
                                     style: TextStyle(
                                       color: Colors.grey
                                     ),

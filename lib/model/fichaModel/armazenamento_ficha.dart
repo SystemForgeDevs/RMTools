@@ -57,8 +57,6 @@ class FichaRepository {
   await salvar(ficha);
   return true;
 }
-
-
   Future<Ficha?> carregar(String nomePersonagem) async {
     final file = await _file(nomePersonagem);
     if (!await file.exists()) return null;
