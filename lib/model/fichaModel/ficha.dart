@@ -334,7 +334,55 @@ class Ficha{
   Ficha criarFicha({ required int np ,required String nomeJogador ,required String nomePersonagem})  
     {return Ficha.criar(np: np, nomeJogador: nomeJogador, nomePersonagem: nomePersonagem);}
 
+  bool adicionarDefesas(String nome,int valor){
+    
+    if(nome=='esquiva'){
+      int teste = esquiva;
+      if(teste+1+ resistencia<=np*2){
+        esquiva+=1;
+        pontosD-=1;
+        return true;
+      }
+    }
+    
+    if(nome=='fortitude'){
+      int teste = fortitude;
+      if(teste+1+ vontade<=np*2){
+        fortitude+=1;
+        pontosD-=1;
+        return true;
+      }
+    }
+    
+    if(nome=='resistencia'){
+      int teste = resistencia;
+      if(teste+1+ aparar<=np*2 && teste+1+esquiva<=np*2){
+        resistencia+=1;
+        pontosD-=1;
+        return true;
+      }
+    }
 
+    if(nome=='aparar'){
+      int teste = aparar;
+      if(teste+1+ resistencia<=np*2){
+        aparar+=1;
+        pontosD-=1;
+        return true;
+      }
+    }
+    
+    if(nome=='vontade'){
+      int teste = vontade;
+      if(teste+1+ fortitude<=np*2){
+        vontade+=1;
+        pontosD-=1;
+        return true;
+      }
+    }
+    
+    return false;
+  }
  
 
 
@@ -347,21 +395,35 @@ class Ficha{
         
         
         if(nome=='luta'){
-          if(novoValorHabilidade + resistencia>np*2) return false;
+          if(novoValorHabilidade + resistencia>np*2){ 
+            return false;
+          }else{aparar+=1;}
         }
         
         if(nome=='agilidade'){
-          if(novoValorHabilidade + resistencia>np*2) return false;
+          if(novoValorHabilidade + resistencia>np*2){ 
+            return false;
+          }else{esquiva+=1;}
         }
-
+        
         if(nome=='prontidao'){
-          if(novoValorHabilidade + fortitude>np*2) return false;
+          if(novoValorHabilidade + fortitude>np*2){ 
+          return false;
+          }else{vontade+=1;}
         }
         
         if(nome=='vigor'){
-          if(novoValorHabilidade + aparar>np*2) return false;
-          if(novoValorHabilidade + esquiva>np*2) return false;
-          if(novoValorHabilidade + vontade>np*2) return false;
+          if (
+            novoValorHabilidade + aparar > np * 2 ||
+            novoValorHabilidade + esquiva > np * 2 ||
+            novoValorHabilidade + vontade > np * 2
+          ) {
+            return false;
+          }else{
+            fortitude+=1;
+            resistencia+=1;
+          }
+
         }
 
           if(nome == 'luta'){
@@ -580,7 +642,7 @@ class Ficha{
         return 2;
 
       case 'Evasão':
-        return 0;
+        return 2;
       
       case 'Idiomas':
         return 12;
@@ -676,36 +738,6 @@ class Ficha{
 }
 
  
-
-  //COMPONENTES
-  
-
-
-    
-   
-  // bool adicionarComponentes(String nomePoder,String nomeComponente,String efeito,int custoBase,int graduacao){
-  //   nomePoder;
-    
-  //   if(!existe){
-      
-  //     return true;
-  //   }
-  
-  //   return false;
-
-  // }  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
   
   Map<String, dynamic> toJson() {
     return {
