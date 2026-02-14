@@ -25,14 +25,14 @@
 
 import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
-import 'package:printing/printing.dart';
+
 import 'dart:convert';
 import 'dart:io';
 //import 'dart:nativewrappers/_internal/vm/lib/ffi_native_type_patch.dart';
 // import 'package:path_provider/path_provider.dart';
 import 'package:rmtools/model/fichaModel/ficha.dart';
 
-import 'package:flutter/services.dart';
+
 
 class FichaRepository {
 
@@ -148,150 +148,158 @@ Future<List<String>> carregarNomesComponentes(String nomePersonagem, String? nom
 }
 
 
-// Future<void> exportarFicha(Ficha ficha) async {
-//   try {
-//     final data = await rootBundle.load('assets/personagem.docx');
-//     final bytes = data.buffer.asUint8List();
-//     final docx = await DocxTemplate.fromBytes(bytes);
-
-//     // USAR PLAINCONTENT EM VEZ DE CONTENT PARA AS LINHAS
-//     final vantagensLinhas = <PlainContent>[];
-    
-//     for (var v in ficha.vantagens) {
-//       final linha = PlainContent("vantagens"); // Título igual ao da lista
-//       linha.add(TextContent("nome", v.nome));
-//       linha.add(TextContent("graduacao", v.graduacao.toString()));
-//       vantagensLinhas.add(linha);
-//     }
-
-//     final periciasLinhas = <PlainContent>[];
-    
-//     for (var p in ficha.pericias) {
-//       final linha = PlainContent("pericias"); // Título igual ao da lista
-//       linha.add(TextContent("nome", p.nome));
-//       linha.add(TextContent("graduacao", p.graduacao.toString()));
-//       linha.add(TextContent("bonus", p.bonus.toString()));
-//       periciasLinhas.add(linha);
-//     }
-
-//     // CONSTRUIR CONTEÚDO PRINCIPAL
-//     final content = Content();
-    
-//     // Campos simples
-//     content.add(TextContent("np", ficha.np.toString()));
-//     content.add(TextContent("nomeJogador", ficha.nomeJogador));
-//     content.add(TextContent("nomePersonagem", ficha.nomePersonagem));
-
-//     // Habilidades
-//     content.add(TextContent("forca", ficha.habilidades['forca'].toString()));
-//     content.add(TextContent("agilidade", ficha.habilidades['agilidade'].toString()));
-//     content.add(TextContent("destreza", ficha.habilidades['destreza'].toString()));
-//     content.add(TextContent("luta", ficha.habilidades['luta'].toString()));
-//     content.add(TextContent("intelecto", ficha.habilidades['intelecto'].toString()));
-//     content.add(TextContent("prontidao", ficha.habilidades['prontidao'].toString()));
-//     content.add(TextContent("presenca", ficha.habilidades['presenca'].toString()));
-//     content.add(TextContent("vigor", ficha.habilidades['vigor'].toString()));
-//     content.add(TextContent("custoHabilidades", ficha.custoHabilidades.toString()));
-
-//     // Defesas
-//     content.add(TextContent("esquiva", ficha.esquiva.toString()));
-//     content.add(TextContent("aparar", ficha.aparar.toString()));
-//     content.add(TextContent("fortitude", ficha.fortitude.toString()));
-//     content.add(TextContent("vontade", ficha.vontade.toString()));
-//     content.add(TextContent("resistencia", ficha.resistencia.toString()));
-
-//     // LISTAS - usando PlainContent
-//     if (vantagensLinhas.isNotEmpty) {
-//       content.add(ListContent("vantagens", vantagensLinhas.cast<Content>()));
-//     }
-
-//     if (periciasLinhas.isNotEmpty) {
-//       content.add(ListContent("pericias", periciasLinhas.cast<Content>()));
-//     }
-
-//     // Custos
-//     content.add(TextContent("custoVantagens", ficha.custoVantagens.toString()));
-//     content.add(TextContent("custoPericias", ficha.custoPericias.toString()));
-//     content.add(TextContent("totalGasto", ficha.totalGasto.toString()));
-//     content.add(TextContent("pontosRestantes", ficha.pontosRestantes.toString()));
-
-//     final gerado = await docx.generate(content);
-//     final file = File("/storage/emulated/0/Download/${ficha.nomePersonagem}.docx");
-//     await file.writeAsBytes(gerado!);
-    
-//   } catch (e, stack) {
-//     print('Erro na exportação: $e');
-//     print(stack);
-//   }
-// }
-
-
-
-
-
 
 Future<void> exportarFicha(Ficha ficha) async {
-  try {
+  
+    // =========================
+    // 1️⃣ GERAR PDF
+    // =========================
+
     final pdf = pw.Document();
 
     pdf.addPage(
       pw.MultiPage(
         maxPages: 500,
         pageFormat: PdfPageFormat.a4,
-        margin: pw.EdgeInsets.all(32),
+        margin: const pw.EdgeInsets.all(32),
         build: (context) => [
-          // TÍTULO
-          pw.Center(
-            child: pw.Text(
-              'FICHA DE PERSONAGEM',
-              style: pw.TextStyle(
-                fontSize: 24,
-                fontWeight: pw.FontWeight.bold,
+          pw.Column(
+            crossAxisAlignment: pw.CrossAxisAlignment.start,
+            children: [
+
+              pw.Center(
+                child: pw.Text(
+                  'FICHA DE PERSONAGEM',
+                  style: pw.TextStyle(
+                    fontSize: 24,
+                    fontWeight: pw.FontWeight.bold,
+                  ),
+                ),
               ),
-            ),
+              pw.SizedBox(height: 20),
+
+              _buildDadosBasicos(ficha),
+              pw.SizedBox(height: 20),
+
+              _buildHabilidades(ficha),
+              pw.SizedBox(height: 20),
+
+              _buildDefesas(ficha),
+              pw.SizedBox(height: 20),
+
+              _buildVantagens(ficha),
+              pw.SizedBox(height: 20),
+
+              _buildPericias(ficha),
+              pw.SizedBox(height: 20),
+
+              _buildResumoPontos(ficha),
+              pw.SizedBox(height: 20),
+
+              _buildObservacoes(),
+            ],
           ),
-          pw.SizedBox(height: 20),
-          
-          // DADOS BÁSICOS
-          _buildDadosBasicos(ficha),
-          pw.SizedBox(height: 20),
-
-          // HABILIDADES
-          _buildHabilidades(ficha),
-          pw.SizedBox(height: 20),
-
-          // DEFESAS
-          _buildDefesas(ficha),
-          pw.SizedBox(height: 20),
-
-          // VANTAGENS (agora com suporte a muitas linhas)
-          _buildVantagens(ficha),
-          pw.SizedBox(height: 3),
-
-          // PERÍCIAS (agora com suporte a muitas linhas)
-          _buildPericias(ficha),
-          pw.SizedBox(height: 20),
-
-          // RESUMO DE PONTOS
-          _buildResumoPontos(ficha),
-          pw.SizedBox(height: 20),
-
-          // OBSERVAÇÕES
-          _buildObservacoes(),
         ],
       ),
     );
 
-    final file = File("/storage/emulated/0/Download/${ficha.nomePersonagem}.pdf");
-    await file.writeAsBytes(await pdf.save());
-    
-    print('PDF exportado com sucesso: ${file.path}');
-    
-  } catch (e, stack) {
-    print('Erro na exportação do PDF: $e');
-    print(stack);
+    final pdfFile = File(
+        "/storage/emulated/0/Download/${ficha.nomePersonagem}.pdf");
+
+    await pdfFile.writeAsBytes(await pdf.save());
+
+    // =========================
+    // 2️⃣ GERAR HTML DOS PODERES
+    // =========================
+
+    final html = '''
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<title>Poderes</title>
+
+<style>
+body { font-family: Arial; margin: 40px; }
+h1 { text-align: center; }
+.bloco { border: 1px solid black; padding: 15px; margin-bottom: 20px; border-radius: 5px; }
+label { font-weight: bold; display: block; margin-top: 10px; }
+input, textarea { width: 100%; margin-top: 3px; }
+textarea { min-height: 60px; resize: vertical; }
+button { margin-bottom: 20px; padding: 10px; }
+</style>
+</head>
+
+<body>
+
+<h1>PODERES</h1>
+
+<button onclick="salvarArquivo()">Salvar Arquivo</button>
+
+<div id="containerPoderes"></div>
+
+<script>
+function criarBlocos(quantidade) {
+  const container = document.getElementById("containerPoderes");
+
+  for (let i = 1; i <= quantidade; i++) {
+    container.innerHTML += `
+      <div class="bloco">
+        <h3>Poder \${i}</h3>
+
+        <label>Nome do Poder:</label>
+        <input type="text">
+
+        <label>Efeito:</label>
+        <textarea></textarea>
+
+        <label>Extras/Falhas:</label>
+        <textarea></textarea>
+
+        <label>Descritor:</label>
+        <input type="text">
+
+        <label>Graduação:</label>
+        <input type="number">
+
+        <label>Custo em PP:</label>
+        <input type="number">
+      </div>
+    `;
   }
 }
+
+function salvarArquivo() {
+  const conteudo = document.documentElement.outerHTML;
+  const blob = new Blob([conteudo], { type: "text/html" });
+  const a = document.createElement("a");
+  a.href = URL.createObjectURL(blob);
+  a.download = "poderes_preenchido.html";
+  a.click();
+}
+
+criarBlocos(10); // AQUI define quantos slots você quer
+</script>
+
+</body>
+</html>
+
+''';
+
+    final htmlFile = File(
+        "/storage/emulated/0/Download/${ficha.nomePersonagem}_poderes.html");
+
+    await htmlFile.writeAsString(html);
+
+    
+  
+    
+    
+  
+}
+
+
+
 
 // Widgets auxiliares para organizar o código
 pw.Widget _buildDadosBasicos(Ficha ficha) {
@@ -427,34 +435,36 @@ pw.Widget _buildDefesas(Ficha ficha) {
   );
 }
 
+
 pw.Widget _buildVantagens(Ficha ficha) {
   return pw.Column(
     crossAxisAlignment: pw.CrossAxisAlignment.start,
     children: [
       pw.Text(
         'VANTAGENS',
-        style: pw.TextStyle(fontSize: 18, fontWeight: pw.FontWeight.bold),
+        style: pw.TextStyle(
+          fontSize: 18,
+          fontWeight: pw.FontWeight.bold,
+        ),
       ),
       pw.SizedBox(height: 10),
+
       pw.Container(
-        padding: pw.EdgeInsets.all(10),
+        padding: const pw.EdgeInsets.all(10),
         decoration: pw.BoxDecoration(
           border: pw.Border.all(),
           borderRadius: pw.BorderRadius.circular(5),
         ),
         child: ficha.vantagens.isEmpty
             ? pw.Text('Nenhuma vantagem')
-            : pw.Column(
-                crossAxisAlignment: pw.CrossAxisAlignment.start,
+            : pw.Wrap(
+                runSpacing: 4,
                 children: ficha.vantagens.map((v) {
-                  return pw.Padding(
-                    padding: pw.EdgeInsets.symmetric(vertical: 2),
-                    child: pw.Row(
-                      children: [
-                        pw.Expanded(child: pw.Text('• ${v.nome}')),
-                        pw.Text('Grad: ${v.graduacao}'),
-                      ],
-                    ),
+                  return pw.Row(
+                    children: [
+                      pw.Expanded(child: pw.Text('• ${v.nome}')),
+                      pw.Text('Grad: ${v.graduacao}'),
+                    ],
                   );
                 }).toList(),
               ),
@@ -462,6 +472,9 @@ pw.Widget _buildVantagens(Ficha ficha) {
     ],
   );
 }
+
+
+
 
 pw.Widget _buildPericias(Ficha ficha) {
   return pw.Column(
@@ -534,7 +547,7 @@ pw.Widget _buildPericias(Ficha ficha) {
                         ],
                       ),
                     );
-                  }).toList(),
+                  }),
                 ],
               ),
       ),
