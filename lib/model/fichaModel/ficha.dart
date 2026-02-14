@@ -335,7 +335,7 @@ class Ficha{
     {return Ficha.criar(np: np, nomeJogador: nomeJogador, nomePersonagem: nomePersonagem);}
 
   bool adicionarDefesas(String nome,int valor){
-    if(pontosD>=1) return false;
+    if(pontosD<1 && valor>0) return false;
     //ESQUIVA
     if(nome=='esquiva' && valor>0){
       if(esquiva+1+ resistencia<=np*2){
