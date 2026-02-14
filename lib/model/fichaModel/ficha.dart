@@ -228,11 +228,11 @@ class Ficha{
     'vigor': 0,
   };
   
-  int get esquiva => habilidades['agilidade'] ?? 0;
-  int get fortitude => habilidades['vigor'] ?? 0;
-  int get resistencia => habilidades['vigor'] ?? 0;
-  int get aparar => habilidades['luta'] ?? 0;
-  int get vontade => habilidades['prontidao'] ?? 0;
+  int esquiva = 0;
+  int fortitude = 0;
+  int resistencia = 0;
+  int aparar = 0;
+  int vontade = 0;
   
   int get custoHabilidades {
   return habilidades.values.fold(0, (soma, v) => soma + (v * 2));
@@ -294,8 +294,13 @@ class Ficha{
     this.habilidades,
     this.vantagens,
     this.pericias,
-    this.poderes, 
-  ) : pontosBase = np*15,
+    this.poderes,{
+    this.esquiva = 0,
+    this.aparar = 0,
+    this.fortitude = 0,
+    this.resistencia = 0,
+    this.vontade = 0,
+}) : pontosBase = np*15,
       pontosD=np*15;
 
   //factory usado para criar objetos, um construtor que decide como e se um objeto será criado, cabe logica dentro deste.
@@ -708,6 +713,13 @@ class Ficha{
       'nomeJogador': nomeJogador,
       'nomePersonagem': nomePersonagem,
       'habilidades': habilidades,
+      'defesas': {
+        'esquiva': esquiva,
+        'aparar': aparar,
+        'fortitude': fortitude,
+        'resistencia': resistencia,
+        'vontade': vontade,
+      },
       'vantagens': vantagens.map((v) => v.toJson()).toList(),
       'pericias': pericias.map((p) => p.toJson()).toList(),
       'poderes': poderes.map((p) => p.toJson()).toList(),
@@ -717,35 +729,49 @@ class Ficha{
   }
 
   //CONSTRUTOR PARA O JSON
-  Ficha._fromJson(
-    this.np,
-    this.nomeJogador,
-    this.nomePersonagem,
-    this.habilidades,
-    this.vantagens,
-    this.pericias,
-    this.poderes,
-    this.pontosD,
-  ) : pontosBase = np * 15;
+ Ficha._fromJson(
+  this.np,
+  this.nomeJogador,
+  this.nomePersonagem,
+  this.habilidades,
+  this.vantagens,
+  this.pericias,
+  this.poderes,
+  this.pontosD,
+  this.esquiva,
+  this.aparar,
+  this.fortitude,
+  this.resistencia,
+  this.vontade,
+): pontosBase= np * 15;
+ 
 
   factory Ficha.fromJson(Map<String, dynamic> json) {
-    return Ficha._fromJson(
-      (json['np'] as num).toInt(),
-      json['nomeJogador'] as String,
-      json['nomePersonagem'] as String,
-      Map<String, int>.from(json['habilidades']),
-      (json['vantagens'] as List<dynamic>)
-          .map((v) => Vantagem.fromJson(v))
-          .toList(),
-      (json['pericias'] as List<dynamic>)
-          .map((p) => Pericia.fromJson(p))
-          .toList(),
-      (json['poderes'] as List<dynamic>)
-          .map((p) => Poder.fromJson(p))
-          .toList(),
-      (json['pontosD'] as num).toInt(),
-      );
-    }
+  final defesas = json['defesas'] as Map<String, dynamic>;
+
+  return Ficha._fromJson(
+    (json['np'] as num).toInt(),
+    json['nomeJogador'] as String,
+    json['nomePersonagem'] as String,
+    Map<String, int>.from(json['habilidades']),
+    (json['vantagens'] as List<dynamic>)
+        .map((v) => Vantagem.fromJson(v))
+        .toList(),
+    (json['pericias'] as List<dynamic>)
+        .map((p) => Pericia.fromJson(p))
+        .toList(),
+    (json['poderes'] as List<dynamic>)
+        .map((p) => Poder.fromJson(p))
+        .toList(),
+    (json['pontosD'] as num).toInt(),
+    (defesas['esquiva'] as num).toInt(),
+    (defesas['aparar'] as num).toInt(),
+    (defesas['fortitude'] as num).toInt(),
+    (defesas['resistencia'] as num).toInt(),
+    (defesas['vontade'] as num).toInt(),
+  );
+}
+
 
 
 }
