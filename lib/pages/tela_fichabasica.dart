@@ -163,7 +163,7 @@ class _TelaFichabasicaState extends State<TelaFichabasica> {
                         );   
                       },
                       child: const Text(
-                        "Criar ficha",
+                        "Criar Ficha",
                         style: TextStyle(fontSize: 25),
                       ),
                     ),

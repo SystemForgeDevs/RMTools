@@ -45,32 +45,6 @@ class _TelaPersonagemEditarState extends State<TelaPersonagemEditar> {
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
 
-
-                      //***BOTÃO info basica***
-                      ElevatedButton(
-                          
-                        //tamanho botão
-                        style: ElevatedButton.styleFrom(
-                          minimumSize: const Size(300, 100)
-                        ),
-
-                        //função botão
-                        onPressed: () {},
-                          
-                        //texto botão
-                        child: const Text(
-                          "Informações básicas", 
-                          style: TextStyle(
-                            fontSize: 25,
-                          ),
-                        ),
-                      ),
-
-
-                      //***espaçamento***
-                      const SizedBox(height: 40),
-
-
                       //***BOTÃO Habilidades***
                       ElevatedButton(
                         
