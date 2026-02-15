@@ -252,7 +252,16 @@ class Ficha{
   int get totalGasto {
     return custoHabilidades +
          custoPericias +
-         custoVantagens;
+         custoVantagens+
+         custoDefesas;
+  }
+
+  int get custoDefesas{
+    return ((esquiva-(habilidades['agilidade'] ?? 0)) 
+    + (aparar-(habilidades['luta'] ?? 0)) 
+    + (fortitude-(habilidades['vigor'] ?? 0)))
+    + (resistencia-(habilidades['vigor'] ?? 0))
+    + (vontade-(habilidades['prontidao'] ?? 0));
   }
 
   int get pontosRestantes {
@@ -277,7 +286,7 @@ class Ficha{
     "Investigação": "intelecto",
     "Percepção": "prontidao",
     "Persuasão": "presenca",
-    "PrestiDig.":"destreza",
+    "Prestidigitação":"destreza",
     "Tecnologia": "intelecto",
     "Tratamento": "intelecto",
     "Veículos": "destreza",
@@ -542,13 +551,13 @@ class Ficha{
   }
 
   int calcularAtaqueDistancia() {
-  final habilidade = habilidades['destreza'] ?? 0;
+    final habilidade = habilidades['destreza'] ?? 0;
 
-  final pericia = verificarPericia('Combate Dis.')?.graduacao ?? 0;
+    final pericia = verificarPericia('Combate Dis.')?.graduacao ?? 0;
 
-  final vantagem = verificarVantagem('Ataque à Distância')?.graduacao ?? 0;
+    final vantagem = verificarVantagem('Ataque à Distância')?.graduacao ?? 0;
 
-  return habilidade + pericia + vantagem;
+    return habilidade + pericia + vantagem;
 }
 
 
@@ -614,7 +623,6 @@ class Ficha{
 
     return novoBonus <= np + 10;
   }
-
 
   bool adicionarPericia(String nome,int valor){
     Pericia? existe = verificarPericia(nome);

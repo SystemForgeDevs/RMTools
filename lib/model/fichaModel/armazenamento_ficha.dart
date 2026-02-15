@@ -31,11 +31,26 @@ import 'dart:io';
 //import 'dart:nativewrappers/_internal/vm/lib/ffi_native_type_patch.dart';
 // import 'package:path_provider/path_provider.dart';
 import 'package:rmtools/model/fichaModel/ficha.dart';
-
+import 'package:permission_handler/permission_handler.dart';
 
 
 class FichaRepository {
 
+  
+  
+
+Future<bool> _pedirPermissao() async {
+  if (await Permission.manageExternalStorage.isGranted) {
+    return true;
+  }
+
+  await Permission.manageExternalStorage.request();
+  return await Permission.manageExternalStorage.isGranted;
+}
+
+
+  
+  
   Future<File> _file(String nomePersonagem) async {
     final dir = Directory('/storage/emulated/0/Download');
     return File('${dir.path}/$nomePersonagem.json');
@@ -96,27 +111,24 @@ class FichaRepository {
 
 
   Future<List<String>> listarFichas() async {
-    final dir = Directory('/storage/emulated/0/Download');
 
-    if (!await dir.exists()) return [];
+  final permitido = await _pedirPermissao();
+  if (!permitido) return [];
 
-    final arquivos = dir.listSync().whereType<File>().where((f) => f.path.endsWith('.json'));
+  final dir = Directory('/storage/emulated/0/Download');
 
-    List<String> nomes = [];
+  if (!await dir.exists()) return [];
 
-    for (var f in arquivos) {
-      final jsonString = await f.readAsString();
-      final jsonMap = jsonDecode(jsonString);
-      
-      if (jsonMap['nomePersonagem'] != null) {
-        nomes.add(jsonMap['nomePersonagem']);
-      } else {
-        nomes.add(f.uri.pathSegments.last.replaceAll('.json', ''));
-      }
-    }
+  final arquivos = dir
+      .listSync()
+      .whereType<File>()
+      .where((f) => f.path.endsWith('.json'));
 
-    return nomes;
-  }
+  return arquivos
+      .map((f) => f.uri.pathSegments.last.replaceAll('.json', ''))
+      .toList();
+}
+
   
   Future<void> excluir(String nomePersonagem) async {
     final file = await _file(nomePersonagem);
@@ -583,6 +595,7 @@ pw.Widget _buildResumoPontos(Ficha ficha) {
         child: pw.Column(
           children: [
             _buildLinhaResumo('Habilidades:', ficha.custoHabilidades.toString()),
+            _buildLinhaResumo('Defesas:', ficha.custoDefesas.toString()),
             _buildLinhaResumo('Vantagens:', ficha.custoVantagens.toString()),
             _buildLinhaResumo('Perícias:', ficha.custoPericias.toString()),
             pw.Divider(),
