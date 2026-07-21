@@ -54,12 +54,12 @@ Melhorias Futuras
 - Histórico de alterações
 - Suporte a múltiplos sistemas de RPG
 
-Autor
+Autores
 
-Kauã
-Neto
+• Kauã
+• Neto
 
-Estudante de Engenharia de Software e desenvolvedor de aplicações web e mobile.
+Estudantes de Engenharia de Software e desenvolvedores de aplicações web e mobile.
 
 ---
 
